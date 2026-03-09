@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Recipe LogIn</title>
+</head>
+
+<body class="background">
+
+    <form>
+
+        <div class="Login">
+            <div>
+                <p class="one">Login</p>
+                <p class="account">Select Account Type :</p>
+                <label for="user">User</label>
+                <input type="radio" name="AccountType" value="User" Id="user" required>
+
+                <label for="admin">Admin</label>
+                <input type="radio" name="AccountType" value="Admin" Id="admin" required>
+            </div>
+            <br>
+            <div>
+                <label for="mail">Username or Email:</label> <br>
+                <input class="input" type="text" name="email" id="mail" placeholder="Enter Your username or email"
+                    required>
+            </div>
+
+            <br>
+            <div>
+                <label for="pass">Password :</label><br>
+                <input class="input" type="password" name="password" id="pass" placeholder="Enter Your Password"
+                    minlength="4" maxlength="8" required>
+            </div>
+
+            <br>
+            <div>
+                <button class="button">Login</button>
+                <p class="one">Don't have an account ? <a href="">Sign Up</a></p>
+            </div>
+        </div>
+
+    </form>
+</body>
+
+</html>

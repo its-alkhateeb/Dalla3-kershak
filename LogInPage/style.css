@@ -1,0 +1,36 @@
+.Login {
+    margin: 200Px auto;
+    width: 50%;
+    padding-left: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.one {
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+}
+
+.account {
+    display: inline;
+}
+
+.button {
+    margin: auto;
+    margin-left: 10px;
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    padding: 10Px;
+    margin: auto;
+}
+
+.background {
+    background-image: url(Images/login.jpeg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
