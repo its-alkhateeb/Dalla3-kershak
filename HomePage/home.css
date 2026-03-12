@@ -1,0 +1,38 @@
+  .featured-bg {
+    background: #f0e8dc;
+    padding: 30px;
+    margin : 40px auto;
+    height: 300px;
+  }
+
+  .featured-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .featured-img-wrap img {
+    width: 100%;
+    border-radius: 20px;
+    height: 250px;
+     object-fit: cover; 
+  }
+
+  .featured-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .featured-text p {
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+  }
+
+  .btn-readmore {
+    background: #c8553d;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 1rem;
+  }
