@@ -1,12 +1,12 @@
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Add new recipe</title>
-</head> 
-<body>
- <nav>
-        <p class="logo"> Website Logo </p>  <!-- photo -->
-        <ul class="navitems">
+    <head>
+        <meta charset="UTF-8">
+        <title>Edit Recipe</title>
+    </head>
+    <body>
+        <nav>
+          <p class="logo"> Website Logo </p>  <!-- photo -->
+          <ul class="navitems">
             <li><a href="../HomePage/Home.html">Home</a></li>
             <li><a href="../RecipesList/ListOfRecipes.html">Recipes</a></li> 
             <li><a href="../addPage.html">Add Recipe</a></li>  
@@ -15,11 +15,11 @@
             <li><a href="../SignUpPage/Sign up.html">Sign Up</a></li>  
             <li> About Us</li>
             <li>Contact Us</li> 
-        </ul>
-  </nav>
-<h1>Add New Recipe</h1>
+          </ul>
+        </nav>
 
-<!-- inputs   -->
+        <h1>Edit Recipe</h1>
+        <!-- inputs   -->
     <div>    
         <form action="submit.html" method="get">
             <div>
@@ -40,7 +40,7 @@
                     <label for="apetizer">Appetizers</label> 
                 </div>
                 <div>
-                    <input type="radio" id="main" name="course" value="Main Course" required>
+                    <input type="radio" id="main" name="course" value="Main Course" required checked>
                     <label for="main">Main Course</label>
                 </div>
                 <div>
@@ -55,40 +55,39 @@
 
             <div>
                 <h3>ingredient 1</h3 >
-                <input type="text" placeholder="Name" required>
-                <input type="text" placeholder="ID" required>
-                <input type="number" placeholder="quantity" min="1" required>
+                <input type="text" placeholder="Name" required value=" white rice">
+                <input type="text" placeholder="ID" required value="1211">
+                <input type="text" placeholder="quantity" required value="1 cup">
             </div>
             <div>
                 <h3>ingredient 2</h3>
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="ID">
-                <input type="number" placeholder="quantity" min="1">
+                <input type="text" placeholder="Name" value="elbow macaroni">
+                <input type="text" placeholder="ID" value="1311">
+                <input type="text" placeholder="quantity" required value="1 cup">
             </div>
             <div>
                 <h3>ingredient 3</h3>
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="ID">
-                <input type="number" placeholder="quantity" min="1">
+                <input type="text" placeholder="Name" value="brown lentills">
+                <input type="text" placeholder="ID" value="1411">
+                <input type="text" placeholder="quantity" required value="1 cup">
             </div>
             <div>
                 <h3>ingredient 4</h3>
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="ID">
-                <input type="number" placeholder="quantity" min="1">
+                <input type="text" placeholder="Name" value="tomato sauce">
+                <input type="text" placeholder="ID" value="1511">
+                <input type="text" placeholder="quantity" required value="2 cups">
             </div>
             <div>
                 <h3>ingredient 5</h3>
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="ID">
-                <input type="number" placeholder="quantity" min="1">
+                <input type="text" placeholder="Name" value="sliced onions">
+                <input type="text" placeholder="ID" value="1611">
+                <input type="text" placeholder="quantity" required value="2 cups">
             </div>
            </div>
             <input type="submit">
         </form>
-        
-    </div>
+        </div>
 
-</body>
+    </body>
 
 </html>

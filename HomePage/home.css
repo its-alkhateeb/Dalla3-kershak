@@ -117,12 +117,10 @@
     transition: background-color 0.3s;
  }
 
-
-
-
 .navitems{
   display: flex;
   list-style: none;
+  gap: 10px;
 }
   .categories-wrapper {
     text-align: center;
