@@ -3,257 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of recipes</title>
+    <link rel="stylesheet" href="RecipesStyle.css">
+    <title>List of All Recipes</title>
 </head>
-<style>
-    
-    
-</style>
-<body style = "background-color: #f5f0e8; margin: 0; padding: 0;">
-    <nav style="background-color: #271c00; padding: 10px;">
-    <table width="100%" border="0">
-        <tr>
-            <td align="center"><a href="../HomePage/Home.html" style="color: white; text-decoration: none; font-family: sans-serif;">Home</a></td>
-            <td align="center"><a href="../RecipesList/ListOfRecipes.html" style="color: white; text-decoration: none; font-family: sans-serif;">Recipes</a></td>
-            <td align="center"><a href="../addrecipe/addPage.html" style="color: white; text-decoration: none; font-family: sans-serif;">Add Recipe</a></td>
-            <td align="center"><a href="../editRecipe.html" style="color: white; text-decoration: none; font-family: sans-serif;">Edit Recipe</a></td>
-            <td align="center"><a href="../fav page.html" style="color: white; text-decoration: none; font-family: sans-serif;">Favourites</a></td>
-            <td align="center"><a href="../LogInPage/index.html" style="color: white; text-decoration: none; font-family: sans-serif;">Log in</a></td>
-            <td align="center"><a href="../SignUpPage/Sign up.html" style="color: white; text-decoration: none; font-family: sans-serif;">Sign Up</a></td>
-            <td align="center"><a href="../ProfilePage/Profile.html" style="color: white; text-decoration: none; font-family: sans-serif;">Profile</a></td>
-            <td align="center" style="color: white; font-family: sans-serif;">About Us</td>
-            <td align="center" style="color: white; font-family: sans-serif;">Contact Us</td>
-        </tr>
-    </table>
-</nav>
+<body>
+    <!-- navigation bar -->
+      <nav class="navbar">
+      <a href="../HomePage/Home.html" class="navbar-brand">El Sofra</a>
+      <div class="navbar-search">
+        <img src="../Favourites/icons/magnifying-glass.svg" alt="search" width="15" height="15">
+        <input type="text" placeholder="Search recipes...">
+      </div>
+      <div class="navbar-auth">
+        <a href="../ProfilePage/Profile.html" class="navbar-profile-icon">
+          <img src="../Favourites/icons/user.svg" width="38" height="38">
+        </a>
+      </div>
+    </nav>
+  <!-- nav end -->
 
-    
+    <!-- this should include a simple good image representing the food with some words on top of it describing the page using a nice different font -->
+    <header>
+        <img src="" alt="">
+        <h1>List of All Recipes</h1>
+    </header>
 
-    <h1 style="text-align: center; font-size: 2em; font-weight: bold;"> List of recipes 🍽️</h1>
-    <hr style = "border-top: 2px solid #b8860b; margin: 0 30px 24px;">
-    <dev style = "display: flex; flex-wrap: wrap; gap: 20px; padding: 10px 30px ;">
-    
-        <dev style="background: white; border-radius: 8px; width: calc(50% - 10px); box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-            
-             <h2 style="text-align: center;margin: 6px 6px 6px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
-                 Egyption Koshari
-             </h2>
-            <a href="../RecipesPages/Koshary.html">
-              <img style = " margin: 5px; margin-bottom:  0px; float: left"  width = 255px ; height = 255px ; src="RecipesPages/imgs/Egyptian Koshari Recipe.jfif">
-            </a>
-              <p style="color: #444">
-               
-                    Koshari (also spelled kushari and koshary) is the national dish of Egypt made with brown lentil rice, spicy tomato sauce, pasta, and crispy onions. It's popular Egyptian street food, and it hits the spot. This Egyptian koshari recipe is a family recipe   
-             </p>
-              <hr style = "margin-left: 10px; margin-right: 10px;">
-              <dev style = "display: flex; gap: 10px;">
-              <dev style="margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Category
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-                <li>
-                    Egyption
-                </li>
-                <li>
-                    High carb
-                </li>
-                <li>
-                    Main dish
-                </li>
-                <li>
-                    High prep. time
-                </li>
-            </ul>
-        </dev>
-        <dev style="margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Main ingredians
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-               <li>
-                    Macaroni
-                </li>
-                <li>
-                    Rice
-                </li>
-                <li>
-                    lentils
-                </li>
-                <li>
-                    tomato sauce
-                </li>
-                <li>
-                    onions
-                </li>
-            </ul>
-        </dev>
-        </dev>
-        </dev>
-        <dev style="background: white; border-radius: 8px; width: calc(50% - 10px); box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-             <h2 style="text-align: center;margin: 6px 6px 6px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
-                 Creamy Chicken Alfredo
-             </h2>
-            <a href="../RecipesPages/Chicken Alfredo.html">
-              <img style = " margin: 5px; margin-bottom:  0px; float: left"  width = 255px ;height = 255px src="RecipesPages/imgs/chicken-alfredo.webp">
-             </a>
-              <p style="color: #444">
-                A classic Italian-American comfort dish featuring tender grilled chicken breast and fettuccine pasta tossed in a rich, velvety sauce made of parmesan cheese, heavy cream, and garlic.
-            </p>
-              <hr style = "margin-left: 10px; margin-right: 10px;">
-              <dev style = "display: flex; gap: 10px;">
-              <dev style=" margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Category
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-                <li>
-                    Italian
-                </li>
-                <li>
-                    High carb
-                </li>
-                <li>
-                    High protine
-                </li>
-                <li>
-                    Main dish
-                </li>
-                <li>
-                    Low prep. time
-                </li>
-            </ul>
-        </dev>
-        <dev style="margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Main ingredians
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-                 <li>
-                    Fettuccine
-                </li>
-                <li>
-                    Chicken breasts
-                </li>
-                <li>
-                    Heavy cream
-                </li>
-                <li>
-                    Parmesan cheese
-                </li>
-                <li>
-                    Garlic
-                </li>
-            </ul>
-        </dev>
-        </dev>
-        </dev>
-        <dev style="background: white; border-radius: 8px; width: calc(50% - 10px); box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-             <h2 style="text-align: center;margin: 6px 6px 6px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
-                 Chocolate Lava Cake
-             </h2>
-             <a href="../RecipesPages/Chocolate_Lava_Cake.html">
-              <img style = " margin: 5px; margin-bottom:  0px; float: left"  width = 255px ;height = 255px src="RecipesPages/imgs/Chocolate lava cake.jfif.jfif">
-             </a>
-              <p style="color: #444">
-               
-                The Chocolate Lava Cake, also known as Moelleux au Chocolat, is the ultimate indulgence for chocolate lovers. It features a lightly baked outer shell that conceals a rich, liquid chocolate core. When served warm with a cold ball of vanilla ice cream on top, it creates a perfect balance of temperatures and textures that is truly irresistible.        
-            </p>
-              <hr style = "margin-left: 10px; margin-right: 10px;">
-              <dev style = "display: flex; gap: 10px;">
-              <dev style=" margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Category
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-                <li>
-                    International
-                </li>
-            
-                <li>
-                    Dessert
-                </li>
-                <li>
-                    Low prep. time
-                </li>
+    <!-- category bar -->
+    <section class="category-bar">
+      <form action="" class="cat-form">
+        <input type="radio" name="cat-option" value="all" id="cat-btn1" class="cat-radio" checked>
+        <label for="cat-btn1" class="cat-btn">All</label>
 
-            </ul>
-        </dev>
-        <dev style="margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Main ingredians
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-                <li>
-                    dark chocolate
-                </li>
-                <li>
-                    flour
-                </li>
-                <li>
-                    Granulated sugar
-                </li>
-                <li>
-                    Eggs
-                </li>
+        <input type="radio" name="cat-option" value="main-course" id="cat-btn2" class="cat-radio">
+        <label for="cat-btn2" class="cat-btn">Main Dish</label>
 
-            </ul>
-        </dev>
-        </dev>
-        </dev>
-        <dev style="background: white; border-radius: 8px; width: calc(50% - 10px); box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-             <h2 style="text-align: center;margin: 6px 6px 6px; border-bottom: 1px solid #ddd; padding-bottom: 8px;">
-                 Om Ali
-             </h2>
-            <a href="../RecipesPages/Om_Ali.html">
-              <img style = " margin: 5px; margin-bottom:  0px; float: left"  width = 255px ;height = 255px; src="RecipesPages/imgs/Um Ali Recipe – Egyptian Bread Pudding.jfif">
-             </a>
-              <p style="color: #444">
-               
-                Often referred to as the Egyptian version of bread pudding, Om Ali is a comforting, centuries-old dessert. It features layers of golden, flaky pastry soaked in a sweetened milk bath infused with vanilla. The dish is topped with a rich layer of cream and a crunch of toasted nuts and raisins, then broiled until the top develops a beautiful, caramelized crust.        
-            </p>
-              <hr style = "margin-left: 10px; margin-right: 10px;">
-              <dev style = "display: flex; gap: 10px;">
-              <dev style=" margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Category
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-                <li>
-                    Egyption
-                </li>
-                <li>
-                    Dessert
-                </li>
-                <li>
-                    Low prep. time
-                </li>
+        <input type="radio" name="cat-option" value="appetizer" id="cat-btn3" class="cat-radio">
+        <label for="cat-btn3" class="cat-btn">Appetizer</label>
 
-            </ul>
-        </dev>
-        <dev style="margin-right: 10px; margin-bottom: 10px; flex: 1; display: inline-block; text-align: center; border: 1px solid #ccc; border-radius: 4px; padding: 8px; text-align: center;" >
-            <b style = "font-size: 20px;">
-                Main ingredians
-            </b>
-            <ul style ="padding-inline-start:0px ; list-style-type: none;">
-                <li>
-                    Puff pastry
-                </li>
-                <li>
-                    Milk
-                </li>
-                <li>
-                    Heavy cream
-                </li>
-                <li>
-                    Granulated sugar
-                </li>
+        <input type="radio" name="cat-option" value="dessert" id="cat-btn4" class="cat-radio">
+        <label for="cat-btn4" class="cat-btn">Dessert</label>
+      </form>
+    </section>
+    <br><hr>
 
-            </ul>
-        </dev>
-        </dev>
-        </dev>
-    </dev>
-    
+    <!-- this should include the list of all recipes in a nice way and with a good background that fits with the theme -->
+    <section class="Recipes-container">
+        <div class="recipe-card main-course">
+          <div class="img-container">
+            <img src="imgs/burger-with-melted-cheese-m-Y1i3jpYYJZYfOEfX5dX.webp" alt="Recipe image" class="recipe-img">
+            <img src="imgs/real-simple-mushroom-black-bean-burgers-recipe-0c365277d4294e6db2daa3353d6ff605.jpg" alt="Recipe image" class="hover-recipe-img">
+          </div>
+          <div class="recipe-content">
+            <div class="recipe-name">
+              <h2>Cheese Burger</h2>
+            </div>
+            <div class="recipe-metadata">
+              <span>
+                <img src="Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>4.8</span>
+              </span>
+              <span>
+                <img src="Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>20 min</span>
+              </span>
+              <span>
+                <img src="Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>400 cal</span>
+              </span>
+            </div>
+            <div class="recipe-description">
+              <span>A delicious hamburger with melted cheese on top of the meat patty</span>
+            </div>
+            <div class="recipe-actions">
+              <a href="RecipesList.html" target="_blank" class="view-recipe-btn">View Recipe</a>
+              <input type="checkbox" id="fav1" class="fav-checkbox">
+              <label for="fav1" class="fav-btn">Favorite ♡</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="recipe-card dessert">
+          <div class="img-container">
+            <img src="imgs/american-heritage-chocolate-8lPKzLSWNgM-unsplash.jpg" alt="Chocolate Lava Cake" class="recipe-img">
+            <img src="imgs/lava-cake-1-500x500.webp" alt="Lava Cake Inside" class="hover-recipe-img">
+          </div>
+          <div class="recipe-content">
+            <div class="recipe-name">
+              <h2>Lava Cake</h2>
+            </div>
+            <div class="recipe-metadata">
+              <span>
+                <img src="Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>4.9</span>
+              </span>
+              <span>
+                <img src="Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>15 min</span>
+              </span>
+              <span>
+                <img src="Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>350 cal</span>
+              </span>
+            </div>
+            <div class="recipe-description">
+              <span>A rich chocolate cake with a warm, gooey molten center</span>
+            </div>
+            <div class="recipe-actions">
+              <a href="RecipesList.html" target="_blank" class="view-recipe-btn">View Recipe</a>
+              <input type="checkbox" id="fav2" class="fav-checkbox">
+              <label for="fav2" class="fav-btn">Favorite ♡</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="recipe-card appetizer">
+          <div class="img-container">
+            <img src="imgs/Aloo-Samosa-Recipe-Step-By-Step-Instructions.jpg" alt="Aloo Samosa" class="recipe-img">
+            <img src="imgs/close-up-of-delicious-crispy-samosas-with-a-bowl-of-dipping-sauce-on-a-yellow-background-indian-food-street-food-appetizer-snack-and-snack-food-free-photo.jpeg" alt="Samosa Close-up" class="hover-recipe-img">
+          </div>
+          <div class="recipe-content">
+            <div class="recipe-name">
+              <h2>Sambosa</h2>
+            </div>
+            <div class="recipe-metadata">
+              <span>
+                <img src="Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>4.7</span>
+              </span>
+              <span>
+                <img src="Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>45 min</span>
+              </span>
+              <span>
+                <img src="Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>150 cal</span>
+              </span>
+            </div>
+            <div class="recipe-description">
+              <span>Crispy fried pastry filled with spiced potatoes and peas</span>
+            </div>
+            <div class="recipe-actions">
+              <a href="RecipesList.html" target="_blank" class="view-recipe-btn">View Recipe</a>
+              <input type="checkbox" id="fav3" class="fav-checkbox">
+              <label for="fav3" class="fav-btn">Favorite ♡</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="recipe-card main-course">
+          <div class="img-container">
+            <img src="imgs/Egyptian-Koshari-1.jpg" alt="Koshari" class="recipe-img">
+            <img src="imgs/Easy Egyptian Koshari Recipe.jpg" alt="Koshari bowl" class="hover-recipe-img">
+          </div>
+          <div class="recipe-content">
+            <div class="recipe-name">
+              <h2>Koshari</h2>
+            </div>
+            <div class="recipe-metadata">
+              <span>
+                <img src="Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>4.9</span>
+              </span>
+              <span>
+                <img src="Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>50 min</span>
+              </span>
+              <span>
+                <img src="Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>520 cal</span>
+              </span>
+            </div>
+            <div class="recipe-description">
+              <span>National Egyptian dish with rice, pasta, lentils, and tomato sauce</span>
+            </div>
+            <div class="recipe-actions">
+              <a href="RecipesList.html" target="_blank" class="view-recipe-btn">View Recipe</a>
+              <input type="checkbox" id="fav4" class="fav-checkbox">
+              <label for="fav4" class="fav-btn">Favorite ♡</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="recipe-card main-course">
+          <div class="img-container">
+            <img src="imgs/burger-with-melted-cheese-m-Y1i3jpYYJZYfOEfX5dX.webp" alt="Recipe image" class="recipe-img">
+            <img src="imgs/real-simple-mushroom-black-bean-burgers-recipe-0c365277d4294e6db2daa3353d6ff605.jpg" alt="Recipe image" class="hover-recipe-img">
+          </div>
+          <div class="recipe-content">
+            <div class="recipe-name">
+              <h2>Cheese Burger</h2>
+            </div>
+            <div class="recipe-metadata">
+              <span>
+                <img src="Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>4.8</span>
+              </span>
+              <span>
+                <img src="Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>20 min</span>
+              </span>
+              <span>
+                <img src="Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>400 cal</span>
+              </span>
+            </div>
+            <div class="recipe-description">
+              <span>A delicious hamburger with melted cheese on top of the meat patty</span>
+            </div>
+            <div class="recipe-actions">
+              <a href="RecipesList.html" target="_blank" class="view-recipe-btn">View Recipe</a>
+              <input type="checkbox" id="fav5" class="fav-checkbox">
+              <label for="fav5" class="fav-btn">Favorite ♡</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="recipe-card dessert">
+          <div class="img-container">
+            <img src="imgs/american-heritage-chocolate-8lPKzLSWNgM-unsplash.jpg" alt="Chocolate Lava Cake" class="recipe-img">
+            <img src="imgs/lava-cake-1-500x500.webp" alt="Lava Cake Inside" class="hover-recipe-img">
+          </div>
+          <div class="recipe-content">
+            <div class="recipe-name">
+              <h2>Lava Cake</h2>
+            </div>
+            <div class="recipe-metadata">
+              <span>
+                <img src="Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>4.9</span>
+              </span>
+              <span>
+                <img src="Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>15 min</span>
+              </span>
+              <span>
+                <img src="Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                <span>350 cal</span>
+              </span>
+            </div>
+            <div class="recipe-description">
+              <span>A rich chocolate cake with a warm, gooey molten center</span>
+            </div>
+            <div class="recipe-actions">
+              <a href="RecipesList.html" target="_blank" class="view-recipe-btn">View Recipe</a>
+              <input type="checkbox" id="fav6" class="fav-checkbox">
+              <label for="fav6" class="fav-btn">Favorite ♡</label>
+            </div>
+          </div>
+        </div>
+
+
+
+        
+
+        
+        
+
+    </section>
+
+    <footer>
+    Copyright &copy; 2026 All rights reserved
+    </footer>
+
+     <script src="List.js"></script>
 </body>
 </html>
