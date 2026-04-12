@@ -3,116 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="RecipesStyle.css">
-    <title>Recipe: Crispy Beef Sambosa</title>
+    <title>Recipe: Sambosa</title>
 </head>
 <body>
-    <nav style="background-color: #271c00; padding: 10px;">
-    <table width="100%" border="0">
-        <tr>
-            <td align="center"><a href="../HomePage/Home.html" style="color: white; text-decoration: none; font-family: sans-serif;">Home</a></td>
-            <td align="center"><a href="../RecipesList/ListOfRecipes.html" style="color: white; text-decoration: none; font-family: sans-serif;">Recipes</a></td>
-            <td align="center"><a href="../addPage.html" style="color: white; text-decoration: none; font-family: sans-serif;">Add Recipe</a></td>
-            <td align="center"><a href="../editRecipe.html" style="color: white; text-decoration: none; font-family: sans-serif;">Edit Recipe</a></td>
-            <td align="center"><a href="../fav page.html" style="color: white; text-decoration: none; font-family: sans-serif;">Favourites</a></td>
-            <td align="center"><a href="../LogInPage/index.html" style="color: white; text-decoration: none; font-family: sans-serif;">Log in</a></td>
-            <td align="center"><a href="../SignUpPage/Sign up.html" style="color: white; text-decoration: none; font-family: sans-serif;">Sign Up</a></td>
-            <td align="center"><a href="../ProfilePage/Profile.html" style="color: white; text-decoration: none; font-family: sans-serif;">Profile</a></td>
-            <td align="center" style="color: white; font-family: sans-serif;">About Us</td>
-            <td align="center" style="color: white; font-family: sans-serif;">Contact Us</td>
-        </tr>
-    </table>
-</nav>
-
+    <!-- navigation bar -->
+      <nav class="navbar">
+      <a href="../HomePage/Home.html" class="navbar-brand">El Sofra</a>
+      <div class="navbar-search">
+        <img src="../Favourites/icons/magnifying-glass.svg" alt="search" width="15" height="15">
+        <input type="text" placeholder="Search recipes...">
+      </div>
+      <div class="navbar-auth">
+        <a href="../ProfilePage/Profile.html" class="navbar-profile-icon">
+          <img src="../Favourites/icons/user.svg" width="38" height="38">
+        </a>
+      </div>
+    </nav>
+  <!-- nav end -->
     <header align="center">
-        <h1>Crispy Beef Sambosa</h1>
-        <p>A quintessential crispy appetizer: golden fried pastry pockets filled with savory spiced meat.</p>
-        <hr width="50%">
+        <h1>Sambosa 
+            <a href="EditableRecipesPages/Sambosa.html">
+                <img src="Icons/pencil.svg" class="Edit-Icon">
+            </a>
+        </h1>
+        <p class="brif-desc">A quintessential crispy appetizer: golden fried pastry pockets filled with savory spiced meat.</p>
     </header>
 
-    <main>
-        <table width="100%" border="0" cellpadding="10">
-            <tr>
-                <td width="50%" valign="top">
-                    <img src="imgs/world-cuisine-with-delicious-food.jpg" alt="Final Dish" width="100%">
-                </td>
+    <div class="Info-Container">
+        <div class="Info-Card">
+            <img class="Icons" src="Icons/salad.svg">
+            <p class="Info-Card-Lable">PREP. TIME:</p>
+            <p class="Info-Card-Value">30 Mins</p>
+        </div>
+        <div class="Info-Card" >
+            <img class="Icons" src="Icons/circular-clock.svg">
+            <p class="Info-Card-Lable">COOK. TIME:</p>
+            <p class="Info-Card-Value">10 Mins</p>
+        </div>
+        <div class="Info-Card" >
+            <img class="Icons" src="Icons/fork.svg">
+            <p class="Info-Card-Lable">SERVINGS:</p>
+             <p class="Info-Card-Value">24 Pieces</p>
+        </div>
+    </div>
+    <div class="Recipe-Body">
+        <div class="Ingredients">
+            <h2>Ingredients:</h2>
+            <ul>
+                <li>1 pack Sambosa wrappers</li>
+                <li>500g Ground beef</li>
+                <li>1 large Onion (finely diced)</li>
+                <li>1/2 cup Fresh parsley</li>
+                <li>1 tsp Allspice (Baharat)</li>
+                <li>Salt and black pepper</li>
+                <li>1 tbsp Flour + 2 tbsp Water</li>
+            </ul>
+        </div>
+        <div class="Image">
+            <img src="imgs/Gemini_Generated_Image_qejrkdqejrkdqejr.png" >
+        </div>
+    </div>
+    <div class="Prep-section">
+        <h2>Preparation:</h2>
+        <div class="Steps">
+            <div class="Step">
+                <p class="Step-num">1</p>
+                <p class="Step-text">
+                    The Filling: Sauté diced onions until soft, add ground beef and cook until browned, then stir in spices and parsley. Let cool.
+                </p>
+            </div>
+            <div class="Step">
+                <p class="Step-num">2</p>
+                <p class="Step-text">
+                    The Glue: Mix the flour and water into a thick paste to use for sealing the pastry edges.
+                </p>
+            </div>
+            <div class="Step">
+                <p class="Step-num">3</p>
+                <p class="Step-text">
+                    Folding: Place a teaspoon of filling at the end of a pastry strip and fold diagonally to form a triangle.
+                </p>
+            </div>
+            <div class="Step">
+                <p class="Step-num">4</p>
+                <p class="Step-text">
+                    Zig-Zag: Continue folding the triangle along the strip in a zig-zag motion until you reach the end.
+                </p>
+            </div>
+            <div class="Step">
+                <p class="Step-num">5</p>
+                <p class="Step-text">
+                    Sealing: Dab a small amount of the flour paste on the remaining edge and tuck it into the fold to seal tightly.
+                </p>
                 
-                <td width="50%" valign="middle">
-                    <table bgcolor="#f9f9f9" width="100%" cellpadding="15" border="1" style="border-collapse: collapse;">
-                        <tr>
-                            <td><strong>⏱ Prep Time:</strong> 30 Mins</td>
-                        </tr>
-                        <tr>
-                            <td><strong>🔥 Cook Time:</strong> 10 Mins</td>
-                        </tr>
-                        <tr>
-                            <td><strong>🍽 Servings:</strong> 24 Pieces</td>
-                        </tr>
-                        <tr>
-                            <td><strong>🥗 Category:</strong> Appetizer / Egyptian</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
-        <br>
-
-        <section>
-            <h3>Description</h3>
-            <p>
-                Sambosa is a beloved savory pastry enjoyed throughout the Middle East. In Egypt, these thin, triangular pockets are typically filled with a mixture of minced meat, onions, and warm spices, then deep-fried to a perfect golden crunch. They are the ultimate "finger food" and a staple at every Egyptian gathering.
-            </p>
-        </section>
-
-        <hr>
-
-        <table width="100%" cellpadding="20" border="0">
-            <tr>
-                <td width="40%" valign="top" >
-                    <h3>Ingredients</h3>
-                    <ul>
-                        <li>1 pack Sambosa wrappers</li>
-                        <li>500g Ground beef</li>
-                        <li>1 large Onion (finely diced)</li>
-                        <li>1/2 cup Fresh parsley</li>
-                        <li>1 tsp Allspice (Baharat)</li>
-                        <li>Salt and black pepper</li>
-                        <li>1 tbsp Flour + 2 tbsp Water</li>
-                        <li>Vegetable oil for frying</li>
-                    </ul>
-                </td>
-
-                <td width="60%" valign="top">
-                    <h3>Instructions</h3>
-                    <ol>
-                        <li><strong>The Filling:</strong> Sauté diced onions until soft, add ground beef and cook until browned, then stir in spices and parsley. Let cool.</li>
-                        <li><strong>The Glue:</strong> Mix the flour and water into a thick paste to use for sealing the pastry edges.</li>
-                        <li><strong>Folding:</strong> Place a teaspoon of filling at the end of a pastry strip and fold diagonally to form a triangle.</li>
-                        <li><strong>Zig-Zag:</strong> Continue folding the triangle along the strip in a zig-zag motion until you reach the end.</li>
-                        <li><strong>Sealing:</strong> Dab a small amount of the flour paste on the remaining edge and tuck it into the fold to seal tightly.</li>
-                        <li><strong>Frying:</strong> Heat oil in a deep pan and fry sambosa in batches for 2-3 minutes until golden brown and bubbly.</li>
-                    </ol>
-                </td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <section>
-            <h3>Technical Notes</h3>
-            <table width="100%" cellpadding="10" border="0">
-                <tr>
-                    <td>
-                        <strong>Storage:</strong> Best served fresh, but can be frozen uncooked for up to 3 months in airtight bags.
-                    </td>
-                    <td>
-                        <strong>Pro-Tip:</strong> Keep wrappers under a damp cloth while working to prevent them from drying and cracking.
-                    </td>
-                </tr>
-            </table>
-        </section>
-
-    </main>
+            </div>
+            <div class="Step">
+                <p class="Step-num">6</p>
+                <p class="Step-text">
+                    Frying: Heat oil in a deep pan and fry sambosa in batches for 2-3 minutes until golden brown and bubbly.
+                </p>
+                
+            </div>
+        
+        </div>
+    </div>
 
     <br><br>
     <footer align="center">

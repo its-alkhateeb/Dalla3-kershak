@@ -6,113 +6,107 @@
     <title>Recipe: Chocolate Lava Cake</title>
 </head>
 <body>
-    <nav style="background-color: #271c00; padding: 10px;">
-    <table width="100%" border="0">
-        <tr>
-            <td align="center"><a href="../HomePage/Home.html" style="color: white; text-decoration: none; font-family: sans-serif;">Home</a></td>
-            <td align="center"><a href="../RecipesList/ListOfRecipes.html" style="color: white; text-decoration: none; font-family: sans-serif;">Recipes</a></td>
-            <td align="center"><a href="../addPage.html" style="color: white; text-decoration: none; font-family: sans-serif;">Add Recipe</a></td>
-            <td align="center"><a href="../editRecipe.html" style="color: white; text-decoration: none; font-family: sans-serif;">Edit Recipe</a></td>
-            <td align="center"><a href="../fav page.html" style="color: white; text-decoration: none; font-family: sans-serif;">Favourites</a></td>
-            <td align="center"><a href="../LogInPage/index.html" style="color: white; text-decoration: none; font-family: sans-serif;">Log in</a></td>
-            <td align="center"><a href="../SignUpPage/Sign up.html" style="color: white; text-decoration: none; font-family: sans-serif;">Sign Up</a></td>
-            <td align="center"><a href="../ProfilePage/Profile.html" style="color: white; text-decoration: none; font-family: sans-serif;">Profile</a></td>
-            <td align="center" style="color: white; font-family: sans-serif;">About Us</td>
-            <td align="center" style="color: white; font-family: sans-serif;">Contact Us</td>
-        </tr>
-    </table>
-</nav>
+    <!-- navigation bar -->
+      <nav class="navbar">
+      <a href="../HomePage/Home.html" class="navbar-brand">El Sofra</a>
+      <div class="navbar-search">
+        <img src="../Favourites/icons/magnifying-glass.svg" alt="search" width="15" height="15">
+        <input type="text" placeholder="Search recipes...">
+      </div>
+      <div class="navbar-auth">
+        <a href="../ProfilePage/Profile.html" class="navbar-profile-icon">
+          <img src="../Favourites/icons/user.svg" width="38" height="38">
+        </a>
+      </div>
+    </nav>
+  <!-- nav end -->
 
     <header align="center">
-        <h1>Chocolate Lava Cake</h1>
-        <p>A decadent, melt-in-your-mouth chocolate cake with a warm molten center, served with a cold scoop of vanilla ice cream.</p>
-        <hr width="50%">
+        <h1>Lava Cake 
+            <a href="EditableRecipesPages/Choclate_Lava_Cake.html">
+                <img src="Icons/pencil.svg" class="Edit-Icon">
+            </a>
+        </h1>
+        <p class="brif-desc">A decadent, melt-in-your-mouth chocolate cake with a warm molten center, served with a cold scoop of vanilla ice cream.</p>
     </header>
 
-    <main>
-        <table width="100%" border="0" cellpadding="10">
-            <tr>
-                <td width="50%" valign="top">
-                    <img src="imgs/american-heritage-chocolate-8lPKzLSWNgM-unsplash.jpg" alt="Final Dish" width="100%">
-                </td>
+    <div class="Info-Container">
+        <div class="Info-Card">
+            <img class="Icons" src="Icons/salad.svg">
+            <p class="Info-Card-Lable">PREP. TIME:</p>
+            <p class="Info-Card-Value">10 Mins</p>
+        </div>
+        <div class="Info-Card" >
+            <img class="Icons" src="Icons/circular-clock.svg">
+            <p class="Info-Card-Lable">COOK. TIME:</p>
+            <p class="Info-Card-Value">12 Mins</p>
+        </div>
+        <div class="Info-Card" >
+            <img class="Icons" src="Icons/fork.svg">
+            <p class="Info-Card-Lable">SERVINGS:</p>
+             <p class="Info-Card-Value">2 People</p>
+        </div>
+    </div>
+    <div class="Recipe-Body">
+        <div class="Ingredients">
+            <h2>Ingredients:</h2>
+            <ul>
+                <li>100g High-quality dark chocolate</li>
+                <li>1/2 cup Unsalted butter</li>
+                <li>2 large Eggs + 2 Egg yolks</li>
+                <li>1/4 cup Granulated sugar</li>
+                <li>2 tbsp All-purpose flour</li>
+                <li>1 tsp Vanilla extract</li>
+                <li>2 scoops Vanilla ice cream</li>
+            </ul>
+        </div>
+        <div class="Image">
+            <img src="imgs/Gemini_Generated_Image_31m55b31m55b31m5.png" >
+        </div>
+    </div>
+    <div class="Prep-section">
+        <h2>Preparation:</h2>
+        <div class="Steps">
+            <div class="Step">
+                <p class="Step-num">1</p>
+                <p class="Step-text">
+                    Melt: Melt the dark chocolate and butter together in a heat-proof bowl over simmering water (or in the microwave) until smooth.
+                </p>
+            </div>
+            <div class="Step">
+                <p class="Step-num">2</p>
+                <p class="Step-text">
+                    Whisk: In a separate bowl, whisk the eggs, yolks, sugar, and vanilla until thick and pale. Fold in the melted chocolate.
+                </p>
+            </div>
+            <div class="Step">
+                <p class="Step-num">3</p>
+                <p class="Step-text">
+                    Combine: Gently sift the flour and salt into the mixture. Fold until just combined—do not overmix.
+            </div>
+            <div class="Step">
+                <p class="Step-num">4</p>
+                <p class="Step-text">
+                    Bake: Pour the batter into greased and floured ramekins. Bake at 200°C for 10-12 minutes until the edges are firm but the center is soft.
+                </p>
+            </div>
+            <div class="Step">
+                <p class="Step-num">5</p>
+                <p class="Step-text">
+                    The Flip: Let the cakes cool for 1 minute, then carefully run a knife around the edge and invert them onto a plate.
+                </p>
                 
-                <td width="50%" valign="middle">
-                    <table bgcolor="#f9f9f9" width="100%" cellpadding="15" border="1" style="border-collapse: collapse;">
-                        <tr>
-                            <td><strong>⏱ Prep Time:</strong> 10 Mins</td>
-                        </tr>
-                        <tr>
-                            <td><strong>🔥 Cook Time:</strong> 12 Mins</td>
-                        </tr>
-                        <tr>
-                            <td><strong>🍽 Servings:</strong> 2 People</td>
-                        </tr>
-                        <tr>
-                            <td><strong>🥗 Category:</strong> Dessert / International</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
-        <br>
-
-        <section>
-            <h3>Description</h3>
-            <p>
-                The Chocolate Lava Cake, also known as Moelleux au Chocolat, is the ultimate indulgence for chocolate lovers. It features a lightly baked outer shell that conceals a rich, liquid chocolate core. When served warm with a cold ball of vanilla ice cream on top, it creates a perfect balance of temperatures and textures that is truly irresistible.
-            </p>
-        </section>
-
-        <hr>
-
-        <table width="100%" cellpadding="20" border="0">
-            <tr>
-                <td width="40%" valign="top" >
-                    <h3>Ingredients</h3>
-                    <ul>
-                        <li>100g High-quality dark chocolate</li>
-                        <li>1/2 cup Unsalted butter</li>
-                        <li>2 large Eggs + 2 Egg yolks</li>
-                        <li>1/4 cup Granulated sugar</li>
-                        <li>2 tbsp All-purpose flour</li>
-                        <li>1 tsp Vanilla extract</li>
-                        <li>Pinch of salt</li>
-                        <li><strong>2 scoops Vanilla ice cream</strong></li>
-                    </ul>
-                </td>
-
-                <td width="60%" valign="top">
-                    <h3>Instructions</h3>
-                    <ol>
-                        <li><strong>Melt:</strong> Melt the dark chocolate and butter together in a heat-proof bowl over simmering water (or in the microwave) until smooth.</li>
-                        <li><strong>Whisk:</strong> In a separate bowl, whisk the eggs, yolks, sugar, and vanilla until thick and pale. Fold in the melted chocolate.</li>
-                        <li><strong>Combine:</strong> Gently sift the flour and salt into the mixture. Fold until just combined—do not overmix.</li>
-                        <li><strong>Bake:</strong> Pour the batter into greased and floured ramekins. Bake at 200°C for 10-12 minutes until the edges are firm but the center is soft.</li>
-                        <li><strong>The Flip:</strong> Let the cakes cool for 1 minute, then carefully run a knife around the edge and invert them onto a plate.</li>
-                        <li><strong>The Topping:</strong> Immediately place a large scoop of cold vanilla ice cream on top of the hot cake and serve instantly.</li>
-                    </ol>
-                </td>
-            </tr>
-        </table>
-
-        <hr>
-
-        <section>
-            <h3>Technical Notes</h3>
-            <table width="100%" cellpadding="10" border="0">
-                <tr>
-                    <td>
-                        <strong>Timing is Key:</strong> Every oven is different. If you bake it for 1 minute too long, the center will solidify and you lose the "lava" effect.
-                    </td>
-                    <td>
-                        <strong>Pro-Tip:</strong> Dust the ramekins with cocoa powder instead of flour to avoid white streaks on your dark chocolate cake.
-                    </td>
-                </tr>
-            </table>
-        </section>
-
-    </main>
+            </div>
+            <div class="Step">
+                <p class="Step-num">6</p>
+                <p class="Step-text">
+                    The Topping: Immediately place a large scoop of cold vanilla ice cream on top of the hot cake and serve instantly.
+                </p>
+                
+            </div>
+        
+        </div>
+    </div>
 
     <br><br>
     <footer align="center">
