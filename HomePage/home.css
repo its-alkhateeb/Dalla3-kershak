@@ -314,7 +314,6 @@ footer {
   font-weight: 300;
 }
 
-
 .quick-links h4,
 .contact h4 {
   color: #e6c19c;
@@ -324,7 +323,6 @@ footer {
   font-weight: 400;
   margin: 0 0 22px 0;
 }
-
 
 .quick-links ul {
   list-style: none;
@@ -469,7 +467,7 @@ footer {
     align-items: center;
     padding: 0 32px 0 44px;
     gap: 16px;
-    clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(50px 0%, 100% 0%, 100% 100%, 0% 100%);
     flex-shrink: 0;
   }
 
@@ -495,3 +493,49 @@ footer {
     background: #a57856;
     color: #f5ede3;
   }
+  /*=== Newsletter section ===*/
+
+  .newsletter{
+    padding: 30px;
+    margin : 20px;
+  }
+
+   .top-line {
+      border-top: 2px solid #b8860b;
+      margin: 0 30px 24px;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .bottom-line {
+      border-top: 2px solid #271c00;
+      margin: 0 300px 24px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .email-input {
+      padding: 12px 20px;
+      border: 1px solid #ddd;
+      border-radius: 50px;
+      font-size: 1rem;
+      width: 220px;
+    }
+
+    .subscribe-btn {
+      background: #b8860b;
+      padding: 0px 28px;
+      border-radius: 50px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+    }
