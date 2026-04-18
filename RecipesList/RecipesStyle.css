@@ -110,6 +110,7 @@
     flex-flow: row wrap;
     justify-content: center;
     margin-right: 40px;
+    gap: 20px;
   }
   .cat-form {
     display: flex;
@@ -145,6 +146,29 @@
   form input{
     display: none;
   }
+  .add-recipe-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 24px;
+    background-color: #b8860b;
+    color: #f5ede3;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-style: italic;
+    height: 40px;
+    margin-left: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+    white-space: nowrap;
+}
+
+.add-recipe-btn:hover {
+    background-color: #a87a06;
+    transform: translateY(-2px);
+}
 
   .Recipes-container{
     padding-right: 40px;
