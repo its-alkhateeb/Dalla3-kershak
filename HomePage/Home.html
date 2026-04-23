@@ -4,40 +4,42 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="home.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&...&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&...&display=swap"
+    rel="stylesheet" />
   <title>El Sofra</title>
 </head>
 
 <body style>
   <!-- navigation bar -->
 
-<nav class="navbar">
-  <a href="../HomePage/Home.html" class="navbar-brand">El Sofra</a>
-  <ul class="navbar-links">
-    <li><a href="../HomePage/Home.html" class="active">Home</a></li>
-    <li><a href="../RecipesList/ListOfRecipes.html">Recipes</a></li>
-    <li><a href="../Favourites/Favourites.html">Favourites</a></li>
-    <li><a href="../ProfilePage/Profile.html">Profile</a></li>
-  </ul>
-  <div class="navbar-auth">
-    <a href="../LogInPage/index.html">Log In</a>
-    <a href="../SignUpPage/Sign up.html" class="signup-btn">Sign Up</a>
-    </a>
-  </div>
-</nav>
-    <!-- nav end -->
+  <nav class="navbar">
+    <a href="../HomePage/Home.html" class="navbar-brand">El Sofra</a>
+    <ul class="navbar-links">
+      <li><a href="../HomePage/Home.html" class="active">Home</a></li>
+      <li><a href="../RecipesList/ListOfRecipes.html">Recipes</a></li>
+      <li><a href="../Favourites/Favourites.html">Favourites</a></li>
+      <li><a href="../ProfilePage/Profile.html">Profile</a></li>
+    </ul>
+    <div class="navbar-auth">
+      <a href="../LogInPage/index.html">Log In</a>
+      <a href="../SignUpPage/Sign up.html" class="signup-btn">Sign Up</a>
+      </a>
+    </div>
+  </nav>
+  <!-- nav end -->
 
   <!-- hero section -->
   <div class="hero">
     <div class="hero-text">
       <p class="tagline">Discover the Taste of Egypt </p>
       <h1 class="heroHeader"><span class="auth">Authentic</span> </h1>
-        <h1 class="hero-content">Egyptian Recipes</h1>
+      <h1 class="hero-content">Egyptian Recipes</h1>
       <p class="herodiscr">Discover traditional Egyptian dishes made with love and simple ingredients.</p>
       <div class="search">
-        <input type="text" placeholder="Explore Recipes" class="searchInput">
-        <button class="searchBtn">search</button>
+        <input type="text" id="searchInput" placeholder="Explore Recipes" class="searchInput">
+        <button id="searchBtn" class="searchBtn">search</button>
       </div>
+      <div id="searchResults" class="results-box"></div>
     </div>
     <div class="heroimg"><img src="https://v3b.fal.media/files/b/0a920229/XTmuLgyhgpIHWH5rkqtK4_m7qyNkjO.jpg"
         alt="egyptian food"></div>
@@ -99,7 +101,7 @@
   <!--FEATURED RECIPE SECTION END-->
 
   <!--POPULAR RECIPES SECTION-->
-  
+
   <section class="popular-wrapper">
     <h2 class="popular-title">Popular Recipes</h2>
 
@@ -141,71 +143,73 @@
   <!--Newsletter section-->
 
   <div class="newsletter">
-  <hr class="top-line">
-  
-  <h1 class="title">
-    Subscribe to get new recipes every week
-  </h1>
-  
-  <hr class="bottom-line">
-  
-  <div class="container">
-    <input type="email" placeholder="Your email" class="email-input">
-    <button class="subscribe-btn">Subscribe</button>
-  </div>
+    <hr class="top-line">
 
-</div>
-  <!--Newsletter section End-->
-    
- <!--FOOTER SECTION-->
-<footer>
+    <h1 class="title">
+      Subscribe to get new recipes every week
+    </h1>
 
-  <div class="footer-top">
+    <hr class="bottom-line">
 
-    <div class="about">
-      <h2 class="brand">About Us</h2>
-      <p>Our Recipe Website helps people discover easy and delicious meals to cook at home</p>
+    <div class="container">
+      <input type="email" placeholder="Your email" class="email-input">
+      <button class="subscribe-btn">Subscribe</button>
     </div>
 
-    <div class="quick-links">
-      <h4>Explore</h4>
-      <ul>
-        <li><a href="../HomePage/Home.html" class="active">Home</a></li>
-        <li><a href="../RecipesList/ListOfRecipes.html">Recipes</a></li>
-        <li><a href="../Favourites/Favourites.html">Favourites</a></li>
-        <li><a href="../ProfilePage/Profile.html">Profile</a></li>
+  </div>
+  <!--Newsletter section End-->
+
+  <!--FOOTER SECTION-->
+  <footer>
+
+    <div class="footer-top">
+
+      <div class="about">
+        <h2 class="brand">About Us</h2>
+        <p>Our Recipe Website helps people discover easy and delicious meals to cook at home</p>
+      </div>
+
+      <div class="quick-links">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="../HomePage/Home.html" class="active">Home</a></li>
+          <li><a href="../RecipesList/ListOfRecipes.html">Recipes</a></li>
+          <li><a href="../Favourites/Favourites.html">Favourites</a></li>
+          <li><a href="../ProfilePage/Profile.html">Profile</a></li>
+        </ul>
+      </div>
+
+      <div class="contact">
+        <h4>Contact</h4>
+        <p> Phone: +20 123 456 7890</p>
+        <p> contact@elsofra.com</p>
+        <p> Cairo, Egypt</p>
+      </div>
+
+    </div>
+
+    <hr class="footer-divider">
+
+    <div class="built-by-row">
+      <span class="built-by-label">Built By</span>
+      <ul class="allFooter">
+        <li><a href="https://www.linkedin.com/in/rana-samy-698833370" target="_blank">Rana</a></li>
+        <li><a href="https://www.linkedin.com/in/tasneem-masoud-53b3b3250" target="_blank">Tasneem</a></li>
+        <li><a href="https://www.linkedin.com/in/ramez-rizk-367829248" target="_blank">Ramez</a></li>
+        <li><a href="https://www.linkedin.com/in/mohamed-al-khateeb-ab310034a" target="_blank">Mohamed</a></li>
+        <li><a href="https://www.linkedin.com/in/malak-youssef-14040b378" target="_blank">Malak</a></li>
+        <li><a href="https://www.linkedin.com/in/yassin-mohamed-8ab129346/" target="_blank">Yassin</a></li>
       </ul>
     </div>
 
-    <div class="contact">
-      <h4>Contact</h4>
-      <p> Phone: +20 123 456 7890</p>
-        <p> contact@elsofra.com</p>
-        <p> Cairo, Egypt</p>
+    <div class="copyright">
+      <p>© 2025 El Sofra · All Rights Reserved</p>
     </div>
 
-  </div>
-
-  <hr class="footer-divider">
-
-  <div class="built-by-row">
-    <span class="built-by-label">Built By</span>
-    <ul class="allFooter">
-      <li><a href="https://www.linkedin.com/in/rana-samy-698833370" target="_blank">Rana</a></li>
-      <li><a href="https://www.linkedin.com/in/tasneem-masoud-53b3b3250" target="_blank">Tasneem</a></li>
-      <li><a href="https://www.linkedin.com/in/ramez-rizk-367829248" target="_blank">Ramez</a></li>
-      <li><a href="https://www.linkedin.com/in/mohamed-al-khateeb-ab310034a" target="_blank">Mohamed</a></li>
-      <li><a href="https://www.linkedin.com/in/malak-youssef-14040b378" target="_blank">Malak</a></li>
-      <li><a href="https://www.linkedin.com/in/yassin-mohamed-8ab129346/" target="_blank">Yassin</a></li>
-    </ul>
-  </div>
-
-  <div class="copyright">
-    <p>© 2025 El Sofra · All Rights Reserved</p>
-  </div>
-
-</footer>
-<!--FOOTER SECTION END-->
+  </footer>
+  <!--FOOTER SECTION END-->
+  <script src="home.js"></script>
+  <script src="../RecipesPages/Recipes.js"></script>
 
 </body>
 
