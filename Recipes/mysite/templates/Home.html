@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'Css/Home.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap"
+    rel="stylesheet" />
+  <title>El Sofra</title>
+</head>
+
+<body>
+  <!-- navigation bar -->
+  <nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
+    <ul class="navbar-links">
+      <li><a href="{% url 'home' %}" class="active">Home</a></li>
+      <li><a href="{% url 'recipe_list' %}">Recipes</a></li>
+      <li><a href="{% url 'favorites' %}">Favourites</a></li>
+      <li><a href="{% url 'profile' %}">Profile</a></li>
+    </ul>
+    <div class="navbar-auth">
+      <a href="{% url 'login' %}">Log In</a>
+      <a href="{% url 'register' %}" class="signup-btn">Sign Up</a>
+    </div>
+  </nav>
+  <!-- nav end -->
+
+  <!-- hero section -->
+  <div class="hero">
+    <div class="hero-text">
+      <p class="tagline">Discover the Taste of Egypt</p>
+      <h1 class="heroHeader"><span class="auth">Authentic</span></h1>
+      <h1 class="hero-content">Egyptian Recipes</h1>
+      <p class="herodiscr">Discover traditional Egyptian dishes made with love and simple ingredients.</p>
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Explore Recipes" class="searchInput">
+        <button id="searchBtn" class="searchBtn">Search</button>
+      </div>
+      <div id="searchResults" class="results-box"></div>
+    </div>
+    <div class="heroimg">
+      <img src="https://v3b.fal.media/files/b/0a920229/XTmuLgyhgpIHWH5rkqtK4_m7qyNkjO.jpg" alt="egyptian food">
+    </div>
+  </div>
+  <!-- hero section end -->
+
+  <!-- Categories section -->
+  <section class="categories-wrapper">
+    <h2 style="font-size: 2rem; margin-bottom: 30px;">Our Recipe Categories</h2>
+    <div class="categories-container">
+
+      <div class="cat-card">
+        <img src="{% static 'Images/Gemini_Generated_Image_16dlv816dlv816dl.png' %}" alt="Mains">
+        <h3>Main Dishes</h3>
+      </div>
+
+      <div class="cat-card">
+        <img src="{% static 'Images/Gemini_Generated_Image_euhvk8euhvk8euhv.png' %}" alt="Appetizers">
+        <h3>Appetizers</h3>
+      </div>
+
+      <div class="cat-card">
+        <img src="{% static 'Images/Gemini_Generated_Image_sayfajsayfajsayf.png' %}" alt="Desserts">
+        <h3>Desserts</h3>
+      </div>
+
+    </div>
+  </section>
+  <!-- Categories section end -->
+
+  <!-- FEATURED RECIPE SECTION -->
+  <section class="featured-bg">
+    <div class="featured-inn

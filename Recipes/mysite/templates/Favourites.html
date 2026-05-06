@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Favourites Page</title>
+
+    <link rel="stylesheet" href="{% static 'css/favourites.css' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
+
+    <div class="navbar-search">
+        <img src="{% static 'icons/magnifying-glass.svg' %}" width="15" height="15">
+        <input type="text" placeholder="Search recipes...">
+    </div>
+
+    <div class="navbar-auth">
+        <a href="{% url 'profile' %}" class="navbar-profile-icon">
+            <img src="{% static 'icons/user.svg' %}" width="38" height="38">
+        </a>
+    </div>
+</nav>
+
+<h1>Favourites Page</h1>
+
+<div class="grid">
+
+    <div class="card">
+        <img src="{% static 'images/koshari.jpg' %}" alt="Koshary">
+        <h3>Koshari</h3>
+        <button>🤎 Fav</button>
+    </div>
+
+    <div class="card">
+        <img src="{% static 'images/hawashi.webp' %}" alt="Hawawshi">
+        <h3>Hawawshi</h3>
+        <button>🤎 Fav</button>
+    </div>
+
+</div>
+
+<footer>
+    Copyright © 2026 All rights reserved
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile</title>
+
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
+
+    <div class="navbar-search">
+        <img src="{% static 'icons/magnifying-glass.svg' %}" width="15" height="15">
+        <input type="text" placeholder="Search recipes...">
+    </div>
+
+    <div class="navbar-auth">
+        <a href="{% url 'profile' %}">
+            <img src="{% static 'icons/user.svg' %}" width="38" height="38">
+        </a>
+    </div>
+</nav>
+
+<section class="profile-card">
+
+    <img src="{% static 'images/profile-picture.png' %}" class="avatar">
+
+    <h1>Guest User</h1>
+    <p>Member since: 2026</p>
+
+    <p>
+        <a href="{% url 'favorites' %}">Open Favorites List</a>
+    </p>
+
+    <hr>
+
+    <h3>Account Settings</h3>
+
+    <button>Change Profile Picture</button>
+    <button>Change Username</button>
+    <button>Change Password</button>
+
+    <br><br>
+
+    <a href="{% url 'home' %}">Back to Home</a>
+
+</section>
+
+</body>
+</html>
