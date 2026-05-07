@@ -1,0 +1,166 @@
+:root {
+  --gold: #b8860b;
+  --gold-light: #e0c97f;
+  --gold-pale: #f2e9d0;
+  --brown-dark: #2b140c;
+  --brown-mid: #5f3a1e;
+  --brown-warm: #907659;
+  --cream: #f5ede3;
+  --cream-light: #fdf8f2;
+  --text-dark: #271c00;
+  --text-muted: #6b5744;
+  --red-accent: #c8553d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--cream-light);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+
+/* ====== NAVBAR ====== */
+.navbar {
+  background: rgba(245, 237, 227, 0.95);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  display: flex;
+  align-items: center;
+  height: 68px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: none;
+  box-shadow: none !important;        
+  transition: none;
+}
+
+.navbar-brand {
+  color: var(--brown-mid);
+  font-size: 30px;
+  font-weight: 400;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 2px;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0 32px;
+  position: relative;
+}
+
+.navbar-brand::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 32px;
+  right: 32px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover::after {
+  transform: scaleX(1);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.navbar-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.25s;
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: var(--brown-mid);
+  border-bottom: none;
+  padding-bottom: 4px;
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active::after {
+  transform: scaleX(1);
+}
+
+.navbar-auth {
+  background: var(--brown-dark);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 36px 0 52px;
+  gap: 20px;
+  clip-path: polygon(44px 0%, 100% 0%, 100% 100%, 0% 100%);
+  flex-shrink: 0;
+}
+
+.navbar-auth a {
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.3px;
+  transition: opacity 0.2s;
+}
+
+.navbar-auth a:hover {
+  opacity: 0.75;
+}
+
+.navbar-auth .signup-btn {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  color: var(--brown-dark);
+  padding: 8px 22px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+
+}
+
+.navbar-auth .signup-btn:hover {
+  background: linear-gradient(135deg, var(--gold), var(--brown-warm));
+  color: white;
+
+  transform: translateY(-1px);
+}

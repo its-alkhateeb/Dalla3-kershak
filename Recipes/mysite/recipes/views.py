@@ -19,11 +19,8 @@ def favourites(request):
 
 
 
-def recipes_list(request):
-    recipes = Recipe.objects.all()
-    return render(request, 'ListOfRecipes.html', {
-        'recipes': recipes
-    })
-
-def profile(request):
-    return render(request, 'profile.html')
+# def recipes_list(request):
+#     recipes = Recipe.objects.all()
+#     return render(request, 'ListOfRecipes.html', {
+#         'recipes': recipes
+#     })

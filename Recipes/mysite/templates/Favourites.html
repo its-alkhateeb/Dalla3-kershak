@@ -1,11 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Favourites Page</title>
 
+    {% block content %}
     <link rel="stylesheet" href="{% static 'css/favourites.css' %}">
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
@@ -50,5 +52,7 @@
     Copyright © 2026 All rights reserved
 </footer>
 
+{% endblock content %}
 </body>
+
 </html>

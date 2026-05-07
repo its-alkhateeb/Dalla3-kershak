@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+ <nav class="navbar">
+     <a href="{% url 'home' %}" class="navbar-brand">El-Sofra</a>
+
+     <ul class="navbar-links">
+         <li><a href="{% url 'home' %}" class="active">Home</a></li>
+         <li><a href="{% url 'recipes_list' %}">Recipes</a></li>
+         <li><a href="#">Favourites</a></li>
+         <li><a href="{% url 'profile' %}">Profile</a></li>
+     </ul>
+
+     <div class="navbar-auth">
+         <a href="{% url 'login' %}">Log In</a>
+         <a href="{% url 'signup' %}" class="signup-btn">Sign Up</a>
+     </div>
+ </nav>
+
+{% block content %}
+
+{% endblock %}
+</body>
+</html>
