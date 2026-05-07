@@ -1,125 +1,101 @@
-<!DOCTYPE html>
-{% load static %}
 {% extends 'base.html' %}
+{% load static %}
 
+{% block title %}List of All Recipes{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Css/RecipesStyle.css' %}">
+{% endblock %}
 
+{% block content %}
+<!-- header -->
+<header>
+    <h1>List of All Recipes</h1>
+</header>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block content %}
-    <link rel="stylesheet" href="{% static 'Css/RecipesStyle.css' %}">
-    <title>List of All Recipes</title>
-</head>
-<body>
+<!-- category bar -->
+<section class="category-bar">
+    <form class="cat-form">
+        <input type="radio" name="cat-option" value="all" id="cat-btn1" class="cat-radio" checked>
+        <label for="cat-btn1" class="cat-btn">All</label>
 
-    <!-- navigation bar -->
-    <nav class="navbar">
-        <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
-        <div class="navbar-search">
-            <img src="{% static 'Icons/magnifying-glass.svg' %}" alt="search" width="15" height="15">
-            <input type="text" id="searchInput" placeholder="Search recipes...">
+        <input type="radio" name="cat-option" value="Main Courses" id="cat-btn2" class="cat-radio">
+        <label for="cat-btn2" class="cat-btn">Main Dish</label>
+
+        <input type="radio" name="cat-option" value="Appetizers" id="cat-btn3" class="cat-radio">
+        <label for="cat-btn3" class="cat-btn">Appetizer</label>
+
+        <input type="radio" name="cat-option" value="Desserts" id="cat-btn4" class="cat-radio">
+        <label for="cat-btn4" class="cat-btn">Dessert</label>
+    </form>
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'add_recipe' %}" class="add-recipe-btn">
+        <span>+</span> Add New Recipe
+    </a>
+    {% endif %}
+</section>
+<br><hr>
+
+<!-- recipes grid -->
+<section class="Recipes-container">
+
+    {% for recipe in recipes %}
+    <div class="recipe-card show" data-category="{{ recipe.category }}">
+        <div class="img-container">
+            <img src="{% static 'Images/placeholder.jpg' %}" alt="{{ recipe.name }}" class="recipe-img">
         </div>
-        <div class="navbar-auth">
-            <a href="{% url 'profile' %}" class="navbar-profile-icon">
-                <img src="{% static 'Icons/user.svg' %}" width="38" height="38">
-            </a>
-        </div>
-    </nav>
-    <!-- nav end -->
-
-    <!-- header -->
-    <header>
-        <h1>List of All Recipes</h1>
-    </header>
-
-    <!-- category bar -->
-    <section class="category-bar">
-        <form class="cat-form">
-            <input type="radio" name="cat-option" value="all" id="cat-btn1" class="cat-radio" checked>
-            <label for="cat-btn1" class="cat-btn">All</label>
-
-            <input type="radio" name="cat-option" value="Main Courses" id="cat-btn2" class="cat-radio">
-            <label for="cat-btn2" class="cat-btn">Main Dish</label>
-
-            <input type="radio" name="cat-option" value="Appetizers" id="cat-btn3" class="cat-radio">
-            <label for="cat-btn3" class="cat-btn">Appetizer</label>
-
-            <input type="radio" name="cat-option" value="Desserts" id="cat-btn4" class="cat-radio">
-            <label for="cat-btn4" class="cat-btn">Dessert</label>
-        </form>
-
-        {% if user.is_authenticated %}
-        <a href="{% url 'add_recipe' %}" class="add-recipe-btn">
-            <span>+</span> Add New Recipe
-        </a>
-        {% endif %}
-    </section>
-    <br><hr>
-
-    <!-- recipes grid -->
-    <section class="Recipes-container">
-
-        {% for recipe in recipes %}
-        <div class="recipe-card show" data-category="{{ recipe.category }}">
-            <div class="img-container">
-                <img src="{% static 'Images/placeholder.jpg' %}" alt="{{ recipe.name }}" class="recipe-img">
+        <div class="recipe-content">
+            <div class="recipe-name">
+                <h2>{{ recipe.name }}</h2>
             </div>
-            <div class="recipe-content">
-                <div class="recipe-name">
-                    <h2>{{ recipe.name }}</h2>
-                </div>
-                <div class="recipe-metadata">
-                    <span>
-                        <img src="{% static 'Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg' %}" alt="rating">
-                        <span>4.8</span>
-                    </span>
-                    <span>
-                        <img src="{% static 'Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg' %}" alt="time">
-                        <span>{{ recipe.prep_time }}</span>
-                    </span>
-                    <span>
-                        <img src="{% static 'Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg' %}" alt="calories">
-                        <span>{{ recipe.calories }}</span>
-                    </span>
-                </div>
-                <div class="recipe-description">
-                    <span>{{ recipe.description|truncatechars:100 }}</span>
-                </div>
-                <div class="recipe-actions">
-                    <a href="{% url 'recipe_detail' recipe.pk %}" class="view-recipe-btn">View Recipe</a>
-                    {% if user.is_authenticated %}
-                    <form method="POST" action="{% url 'toggle_favorite' recipe.pk %}" style="width:30%;">
-                        {% csrf_token %}
-                        <input type="checkbox" id="fav{{ recipe.pk }}" class="fav-checkbox"
-                            {% if recipe.pk in favorite_ids %}checked{% endif %}
-                            onchange="this.form.submit()">
-                        <label for="fav{{ recipe.pk }}" class="fav-btn">Favorite ♡</label>
-                    </form>
-                    {% else %}
-                    <a href="{% url 'login' %}" class="fav-btn"
-                        style="width:30%; text-align:center; padding:5px 0; text-decoration:none;">
-                        Favorite ♡
-                    </a>
-                    {% endif %}
-                </div>
+            <div class="recipe-metadata">
+                <span>
+                    <img src="{% static 'Icons/star_rate_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg' %}" alt="rating">
+                    <span>4.8</span>
+                </span>
+                <span>
+                    <img src="{% static 'Icons/timer_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg' %}" alt="time">
+                    <span>{{ recipe.prep_time }}</span>
+                </span>
+                <span>
+                    <img src="{% static 'Icons/local_fire_department_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg' %}" alt="calories">
+                    <span>{{ recipe.calories }}</span>
+                </span>
+            </div>
+            <div class="recipe-description">
+                <span>{{ recipe.description|truncatechars:100 }}</span>
+            </div>
+            <div class="recipe-actions">
+                <a href="{% url 'recipe_detail' recipe.pk %}" class="view-recipe-btn">View Recipe</a>
+                {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'toggle_favorite' recipe.pk %}" style="width:30%;">
+                    {% csrf_token %}
+                    <input type="checkbox" id="fav{{ recipe.pk }}" class="fav-checkbox"
+                        {% if recipe.pk in favorite_ids %}checked{% endif %}
+                        onchange="this.form.submit()">
+                    <label for="fav{{ recipe.pk }}" class="fav-btn">Favorite ♡</label>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="fav-btn"
+                    style="width:30%; text-align:center; padding:5px 0; text-decoration:none;">
+                    Favorite ♡
+                </a>
+                {% endif %}
             </div>
         </div>
-        {% empty %}
-        <p style="text-align:center; color:#5C4033; font-size:1.2rem; grid-column: 1/-1;">
-            No recipes found.
-        </p>
-        {% endfor %}
+    </div>
+    {% empty %}
+    <p style="text-align:center; color:#5C4033; font-size:1.2rem; grid-column: 1/-1;">
+        No recipes found.
+    </p>
+    {% endfor %}
 
-    </section>
+</section>
 
-    <footer>
-        Copyright &copy; 2025 El Sofra. All rights reserved.
-    </footer>
+<footer>
+    Copyright &copy; 2025 El Sofra. All rights reserved.
+</footer>
 
-    <script src="{% static 'js/List.js' %}"></script>
-{% endblock content %}
-</body>
-</html>
+<script src="{% static 'js/List.js' %}"></script>
+{% endblock %}
