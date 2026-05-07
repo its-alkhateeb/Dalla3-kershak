@@ -1,14 +1,14 @@
 from django.shortcuts import render
-
-
-
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Recipe
+from django.contrib.auth.decorators import login_required
+
+
 
 def recipes_list(request):
     recipes = Recipe.objects.all()
-    data = list(recipes.values())
-    return JsonResponse(data, safe=False)
+    return render(request, 'ListOfRecipes.html', {'recipes': recipes})
 
 
 def home(request):
@@ -27,3 +27,104 @@ def favourites(request):
 
 def profile(request):
     return render(request, 'profile.html')
+
+
+
+# ==============Add Recipes============
+@login_required
+def add_recipe(request):
+
+    if request.method == "POST":
+
+        name = request.POST.get("name")
+        category = request.POST.get("category")
+        description = request.POST.get("description")
+        calories = request.POST.get("calories")
+        serves = request.POST.get("serves")
+        prep_time = request.POST.get("prep_time")
+
+        ingredients = request.POST.getlist("ingredients")
+        instructions = request.POST.getlist("instructions")
+
+        image = request.FILES.get("image")
+
+        Recipe.objects.create(
+            name=name,
+            category=category,
+            description=description,
+            calories=calories,
+            serves=serves,
+            prep_time=prep_time,
+            ingredients="\n".join(ingredients),
+            instructions="\n".join(instructions),
+            image=image
+        )
+
+        return redirect("home")
+
+    return render(request, "addPage.html")
+
+
+
+# ==============Edit Recipes============
+
+@login_required
+def edit_recipe(request, pk):
+
+    recipe = get_object_or_404(Recipe, pk=pk)
+
+    # display only
+    ingredients_list = [i for i in recipe.ingredients.splitlines() if i.strip()]
+    instructions_list = [i for i in recipe.instructions.splitlines() if i.strip()]
+
+    if request.method == 'POST':
+
+        name         = request.POST.get('name', '').strip()
+        category     = request.POST.get('category', '').strip()
+        description  = request.POST.get('description', '').strip()
+        calories     = request.POST.get('calories', '').strip()
+        serves       = request.POST.get('serves', '').strip()
+        prep_time    = request.POST.get('prep_time', '').strip()
+
+        ingredients  = request.POST.getlist('ingredients')
+        instructions = request.POST.getlist('instructions')
+
+        if not name or not category:
+            return render(request, 'editRecipe.html', {
+                'recipe': recipe,
+                'ingredients': ingredients_list,
+                'instructions': instructions_list,
+                'error': 'Name and category are required.'
+            })
+
+        recipe.name        = name
+        recipe.category    = category
+        recipe.description = description
+        recipe.calories    = calories
+        recipe.serves      = serves
+        recipe.prep_time   = prep_time
+
+        recipe.ingredients = "\n".join([i.strip() for i in ingredients if i.strip()])
+        recipe.instructions = "\n".join([i.strip() for i in instructions if i.strip()])
+
+        if request.FILES.get('image'):
+            recipe.image = request.FILES.get('image')
+
+        recipe.save()
+
+        return redirect('recipe_detail', pk=recipe.pk)
+
+    return render(request, 'editRecipe.html', {
+        'recipe': recipe,
+        'ingredients': ingredients_list,
+        'instructions': instructions_list,
+    })
+
+
+
+# ==============Delete Recipes============
+@login_required
+def delete_recipe(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    recipe.delete()
+    return redirect('recipe_list')

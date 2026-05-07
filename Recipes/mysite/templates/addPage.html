@@ -1,5 +1,91 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% block content %}
+    <link rel="stylesheet" href="{% static 'Css/addPage.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
 
-{% endblock content %}
+    <title>Add New Recipe</title>
+</head>
+
+<body style="background-color: #fdf6ee;">
+
+<!-- navbar -->
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
+
+    <div class="navbar-search">
+        <img src="{% static 'Icons/magnifying-glass.svg' %}" width="15">
+        <input type="text" placeholder="Search recipes...">
+    </div>
+
+    <div class="navbar-auth">
+        <a href="{% url 'profile' %}">
+            <img src="{% static 'Icons/user.svg' %}" width="38">
+        </a>
+    </div>
+</nav>
+
+<!-- content -->
+<div class="content">
+    <h1>Add New Egyptian Masterpiece</h1>
+
+    <form method="POST" enctype="multipart/form-data" class="form-card">
+        {% csrf_token %}
+
+        <!-- IMAGE -->
+        <div class="image">
+            <h2>Add Recipe Photo</h2>
+            <label for="inputimg">
+               <img id="Recipeimg" src="{% static 'Images/add recipe.webp' %}" width="200">
+            </label>
+            <input type="file" id="inputimg" name="image" accept="image/*">
+       </div>
+
+        <!-- NAME -->
+        <h2>Recipe Name</h2>
+        <input type="text" name="name" required>
+
+        <!-- CATEGORY -->
+        <h2>Category</h2>
+
+        <input type="radio" name="category" value="Appetizers" required> Appetizers
+        <input type="radio" name="category" value="Main Courses"> Main
+        <input type="radio" name="category" value="Desserts"> Dessert
+
+        <!-- DESCRIPTION -->
+        <h2>Description</h2>
+        <textarea name="description" rows="8" cols="50" required></textarea>
+
+        <!-- INFO -->
+        <h2>Calories</h2>
+        <input type="text" name="calories">
+
+        <h2>Serves</h2>
+        <input type="text" name="serves">
+
+        <h2>Prep Time</h2>
+        <input type="text" name="prep_time">
+
+        <!-- INGREDIENTS -->
+        <h2>Ingredients</h2>
+        <textarea name="ingredients" rows="8" cols="50" placeholder="Enter ingredients " required></textarea>
+
+        <!-- INSTRUCTIONS -->
+        <h2>Instructions</h2>
+
+       <textarea name="instructions" rows="8" cols="50" placeholder="Enter instructions " required></textarea>
+
+        <!-- SUBMIT -->
+        <br><br>
+        <button type="submit">Save Recipe</button>
+    </form>
+</div>
+
+<script src="{% static 'js/addPage.js' %}"></script>
+
+</body>
+</html>
