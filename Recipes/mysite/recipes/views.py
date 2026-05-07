@@ -24,3 +24,6 @@ def favourites(request):
 #     return render(request, 'ListOfRecipes.html', {
 #         'recipes': recipes
 #     })
+
+def profile(request):
+    return render(request, 'profile.html')
