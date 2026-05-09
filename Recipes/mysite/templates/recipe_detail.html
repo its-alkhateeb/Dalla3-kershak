@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recipe: {{ recipe.name }}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'Css/RecipesStyle.css' %}">
+
+<header align="center">
+    <h1>{{ recipe.name }}</h1>
+    <p class="brif-desc">{{ recipe.description }}</p>
+</header>
+
+<div class="Info-Container">
+    <div class="Info-Card">
+        <img class="Icons" src="{% static 'Icons/circular-clock.svg' %}">
+        <p class="Info-Card-Lable">PREP. TIME:</p>
+        <p class="Info-Card-Value">{{ recipe.prep_time }}</p>
+    </div>
+    <div class="Info-Card" >
+        <img class="Icons" src="{% static 'Icons/fork.svg' %}">
+        <p class="Info-Card-Lable">SERVINGS:</p>
+         <p class="Info-Card-Value">{{ recipe.serves }}</p>
+    </div>
+    <div class="Info-Card" >
+        <img class="Icons" src="{% static 'Icons/salad.svg' %}">
+        <p class="Info-Card-Lable">CALORIES:</p>
+         <p class="Info-Card-Value">{{ recipe.calories }}</p>
+    </div>
+</div>
+
+<div class="Recipe-Body">
+    <div class="Ingredients">
+        <h2>Ingredients:</h2>
+        <ul>
+            {% for ingredient in ingredients_list %}
+                <li>{{ ingredient }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="Image">
+        {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+        {% endif %}
+    </div>
+</div>
+
+<div class="Prep-section">
+    <h2>Preparation:</h2>
+    <div class="Steps">
+        {% for step in instructions_list %}
+        <div class="Step">
+            <p class="Step-num">{{ forloop.counter }}</p>
+            <p class="Step-text">{{ step }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<br><br>
+<footer align="center">
+    <hr>
+    <p><small>&copy; 2026 Recipe Finder Project</small></p>
+</footer>
+{% endblock %}

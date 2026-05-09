@@ -1,0 +1,245 @@
+body {
+    background: linear-gradient(135deg, #c59c5d, #f3e5dc, #907659);
+    font-family: sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+.navbar {
+        background: #f5ede3;
+        display: flex;
+        align-items: center;
+        height: 64px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        position: sticky;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 3);
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar-brand {
+        color: #5f3a1e;
+        font-size: 32px;
+        font-weight: 500;
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 1px;
+        text-decoration: none;
+        white-space: nowrap;
+        padding: 0 28px;
+    }
+
+    .navbar-search {
+    display: flex;
+    align-items: center;
+    background: rgba(95, 58, 30, 0.08);
+    border-radius: 25px;
+    padding: 8px 18px;
+    gap: 10px;
+    flex: 1px;
+    max-width: 800px;
+    margin: 0 auto; 
+    width: 60px;
+    
+    }
+
+    .navbar-search input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #5f3a1e;
+    font-size: 14px;
+    width: 100%; 
+    }
+
+    .navbar-search input::placeholder {
+    color: #907659;
+    }
+
+    .navbar-profile-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #f5ede3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    }
+
+    .navbar-auth {
+   
+    background: #2b140c;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 32px 0 44px;
+    gap: 16px;
+    clip-path: polygon(30px 0%, 100% 0%, 100% 100%, 0% 100%);
+    flex-shrink: 0;
+  }
+
+  .navbar-auth a {
+    color: #f5ede3;
+    text-decoration: none;
+    font-size: 20px;
+  }
+
+
+h1 {
+    color: #b8860b;
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+}
+
+.brif-desc{
+    color: #4d4e4c;
+}
+
+.Info-Container{
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #b8860b;
+    border-bottom: 1px solid #b8860b;
+    padding: 18px 0;
+    gap: 12px;
+    padding: 18px 0;
+    margin-bottom: 36px;
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+.Info-Card{
+    align-items: center;
+    display: flex;
+    gap: 6px;
+    flex-direction: column;
+}
+
+.Icons{
+    width: 4rem;
+}
+
+.Info-Card-Lable{
+    font-weight: bold;
+    font-size: 0.75rem;
+    letter-spacing: 0.07em;
+    margin-bottom: 0;
+}
+
+.Info-Card-Value{
+    margin: 0;
+    font-size: 0.95rem;
+    color:#271c00;
+}
+
+.Recipe-Body{
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.Ingredients{
+    flex: 1;
+}
+
+.Ingredients h2{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    color: #b8860b;
+}
+
+.Ingredients ul{
+    list-style: disc;
+    padding-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.Ingredients li{
+    font-size: 1.4rem;
+    font-weight: 300;
+    color:#271c00;
+  
+    line-height: 1.4;
+}
+.Image{
+    flex: 1;
+    display: flex;
+    justify-content: end;
+}
+
+.Image img{
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in;
+    box-shadow: 0 2px #555 ;
+}
+
+.Image img:hover{
+    transform: scale(1.05);
+}
+
+.Prep-section{
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+.Prep-section h2{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+    font-family:'Playfair Display', serif;
+    font-style: italic;
+    color: #b8860b;
+}
+
+.Steps{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-left: 10px;
+}
+
+.Step{
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    
+}
+
+.Step-num{
+    margin-top: 28px;
+    margin-bottom: 28px;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #b8860b;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Step-text{
+    font-size: 1.4rem;
+      font-weight: 400;
+      color: #271c00;
+      line-height: 1.65;
+}
+.Edit-Icon{
+    width: 1.3rem;
+    transition: transform 0.3s ease-in;
+}
+.Edit-Icon:hover{
+    transform: scale(1.05);
+}
