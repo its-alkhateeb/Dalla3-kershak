@@ -59,8 +59,10 @@
     {% for recipe in recipes %}
     <div class="recipe-card {{ recipe.category }}">
 
-        <div class="img-container">
-            <img src="{{ recipe.image.url }}" class="recipe-img">
+       <div class="img-container">
+            <a href="{% url 'recipe_detail' recipe.id %}">
+                <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
+            </a>
         </div>
 
         <div class="recipe-content">
