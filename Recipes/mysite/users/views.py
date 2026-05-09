@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout , update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from .forms import UserUpdateForm, ProfileUpdateForm , PasswordChangeForm ,RegisterForm
 from django.contrib.auth.models import User
-from .forms import RegisterForm
 
 
 def register_view(request):
@@ -49,10 +49,35 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-
 @login_required(login_url='login')
 def profile(request):
-    return render(request, 'profile.html', {'user': request.user})
+    user_form = UserUpdateForm(instance=request.user)
+    profile_form = ProfileUpdateForm(instance=request.user.profile)
+    password_form = PasswordChangeForm(user=request.user)
 
-def dashboard(request):
-    return render(request, 'dashboard.html')
+    if request.method == 'POST':
+        action = request.POST.get('action')
+
+        if action == 'update_profile':
+            user_form = UserUpdateForm(request.POST, instance=request.user)
+            profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(request, 'Profile updated successfully.')
+                return redirect('profile')
+
+        elif action == 'change_password':
+            password_form = PasswordChangeForm(user=request.user, data=request.POST)
+            if password_form.is_valid():
+                request.user.set_password(password_form.cleaned_data['new_password1'])
+                request.user.save()
+                update_session_auth_hash(request, request.user)  # keeps user logged in
+                messages.success(request, 'Password changed successfully.')
+                return redirect('profile')
+
+    return render(request, 'profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'password_form': password_form,
+    })

@@ -141,3 +141,127 @@ form {
 .profile-card a:hover {
     color: #5f3a1e;
 }
+
+.success-msg {
+    color: #3a7a3a;
+    background: #edf7ed;
+    border: 1px solid rgba(58,122,58,0.25);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    margin: 12px 0 0;
+}
+
+.edit-section {
+    margin-top: 16px;
+    background: #fdf8f2;
+    border: 1.5px solid rgba(184,134,11,0.2);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: left;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #5f3a1e;
+    margin-bottom: 18px;
+}
+
+.pic-upload-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.pic-upload-label {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.pic-preview {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #b8860b;
+    display: block;
+}
+
+.pic-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(43,20,12,0.5);
+    color: #e6c19c;
+    font-size: 11px;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.pic-upload-label:hover .pic-overlay { opacity: 1; }
+
+/* Hide the default file input, label acts as the button */
+#id_image { display: none; }
+
+.field-group {
+    margin-bottom: 14px;
+}
+
+.field-group label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #7a5c3a;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.field-group input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid rgba(184,134,11,0.25);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    background: white;
+    color: #2b140c;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.field-group input:focus { border-color: #b8860b; }
+
+.field-error {
+    color: #c8553d;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.save-btn {
+    background: #2b140c !important;
+    color: #e0c97f !important;
+    border-color: #2b140c !important;
+    margin-top: 4px;
+}
+
+.save-btn:hover {
+    background: #b8860b !important;
+    color: white !important;
+    border-color: #b8860b !important;
+}
+
+#id_image {
+    display: none !important;
+}

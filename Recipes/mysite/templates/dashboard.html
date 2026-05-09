@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}El Sofra — Admin Dashboard{% endblock %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'Css/dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+<!-- DASHBOARD HEADER -->
+<div class="dash-header">
+    <div class="dash-header-left">
+        <p class="dash-label">RECIPE MANAGEMENT</p>
+        <h1 class="dash-title">All Recipes</h1>
+    </div>
+    <a href="{% url 'add_recipe' %}" class="add-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Add New Recipe
+    </a>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+    <div class="stats">
+        <div class="stat">
+            <span class="stat-num">{{ recipes|length }}</span>
+            <span class="stat-label">Total Recipes</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-num">3</span>
+            <span class="stat-label">Categories</span>
+        </div>
+    </div>
+
+    <div class="toolbar-right">
+        <form class="cat-form">
+            <input type="radio" name="cat" id="all" class="cat-radio" checked>
+            <label for="all" class="cat-btn">All</label>
+
+            <input type="radio" name="cat" id="main" class="cat-radio">
+            <label for="main" class="cat-btn">Main Courses</label>
+
+            <input type="radio" name="cat" id="app" class="cat-radio">
+            <label for="app" class="cat-btn">Appetizers</label>
+
+            <input type="radio" name="cat" id="dessert" class="cat-radio">
+            <label for="dessert" class="cat-btn">Desserts</label>
+        </form>
+
+        <div class="search-wrap">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" id="dashSearch" placeholder="Search recipes..." oninput="filterSearch(this.value)">
+        </div>
+    </div>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap">
+    <table class="recipe-table">
+        <thead>
+            <tr>
+                <th class="th-img"></th>
+                <th>Recipe Name</th>
+                <th>Category</th>
+                <th>Calories</th>
+                <th>Prep Time</th>
+                <th>Serves</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="recipeTableBody">
+            {% for recipe in recipes %}
+              <tr class="recipe-row" data-name="{{ recipe.name|lower }}" data-category="{{ recipe.category }}">
+                <td class="td-img">
+                    {% if recipe.image %}
+                        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+                    {% else %}
+                        <img src="{% static 'Images/default_recipe.jpg' %}" alt="{{ recipe.name }}">
+                    {% endif %}
+                </td>
+
+                <td class="td-name">
+                    <span class="recipe-name-text">{{ recipe.name }}</span>
+                    <span class="recipe-desc-text">{{ recipe.description|truncatewords:10 }}</span>
+                </td>
+
+                <td class="td-category">
+                    <span class="cat-badge cat-{{ recipe.category|slugify }}">{{ recipe.category }}</span>
+                </td>
+
+                <td class="td-meta">{{ recipe.calories|default:"—" }}</td>
+                <td class="td-meta">{{ recipe.prep_time|default:"—" }}</td>
+                <td class="td-meta">{{ recipe.serves|default:"—" }}</td>
+
+                <td class="td-actions">
+                    <a href="{% url 'edit_recipe' recipe.pk %}" class="action-btn edit-btn">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
+                        Edit
+                    </a>
+                    <form method="POST" action="{% url 'delete_recipe' recipe.pk %}" style="margin:0;"
+                          onsubmit="return confirm('Delete {{ recipe.name }}? This cannot be undone.')">
+                        {% csrf_token %}
+                        <button type="submit" class="action-btn delete-btn">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                <path d="M10 11v6M14 11v6"/>
+                                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                            </svg>
+                            Delete
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="empty-row">
+                    <p>🍽 No recipes yet. <a href="{% url 'add_recipe' %}">Add your first recipe</a></p>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<footer class="dash-footer">
+    <p>El Sofra Admin Panel &nbsp;·&nbsp; &copy; 2026</p>
+</footer>
+
+<script>
+document.querySelectorAll('.cat-radio').forEach(radio => {
+    radio.addEventListener('change', function () {
+       const map = { all: null, main: 'Main Courses', app: 'Appetizers', dessert: 'Desserts' };
+const selected = map[this.id];
+document.querySelectorAll('.recipe-row').forEach(row => {
+    if (!selected) {
+        row.style.display = '';
+    } else {
+        const category = row.dataset.category;
+        row.style.display = (category === selected) ? '' : 'none';
+    }
+});
+    });
+});
+
+function filterSearch(val) {
+    const q = val.toLowerCase();
+    document.querySelectorAll('.recipe-row').forEach(row => {
+        row.style.display = row.dataset.name.includes(q) ? '' : 'none';
+    });
+}
+</script>
+{% endblock %}
+</body>
+</html>

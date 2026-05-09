@@ -36,13 +36,17 @@
 <section class="Recipes-container">
 
     {% for recipe in recipes %}
+        
     <div class="recipe-card" data-category="{{ recipe.category }}">
 
         <a href="{% url 'recipe_detail' recipe.id %}" class="card-click-area"></a>
 
         <div class="img-container">
-            <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
-            
+            {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
+            {% else %}
+                <img src="{% static 'Images/default_recipe.jpg' %}" class="recipe-img" alt="{{ recipe.name }}">
+            {% endif %}
             <div class="rating-badge">
                 ⭐ {{ recipe.average_rating|floatformat:1 }}
             </div>
@@ -52,17 +56,15 @@
             <div class="recipe-name">
                 <h2>{{ recipe.name }}</h2>
             </div>
-
             <div class="recipe-metadata">
                 <span>🔥 {{ recipe.calories|default:"--" }} cal</span>
                 <span>⏱ {{ recipe.prep_time|default:"--" }}</span>
                 <span>🍽 {{ recipe.serves|default:"--" }}</span>
             </div>
-
             <div class="recipe-actions">
                 {% if user.is_authenticated %}
                 <label class="fav-label">
-                    <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}" 
+                    <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}"
                            {% if request.user in recipe.favorites.all %}checked{% endif %}>
                     <div class="fav-btn">❤</div>
                 </label>
@@ -70,13 +72,19 @@
             </div>
         </div>
     </div>
+
+    {% empty %}
+    <div class="empty-favorites">
+        <p>You haven't favorited any recipes yet! Go explore the <a href="{% url 'recipes_list' %}">Recipe List</a>.</p>
+    </div>
     {% endfor %}
 
 </section>
-
 <footer>
     Copyright © 2026
 </footer>
 
 <script src="{% static 'js/List.js' %}"></script>
-{% endblock %}
+{% endblock content %}
+</body>
+</html>

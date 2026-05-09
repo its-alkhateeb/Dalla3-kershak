@@ -63,7 +63,7 @@ def add_recipe(request):
             image=image
         )
 
-        return redirect("home")
+        return redirect("dashboard")
 
     return render(request, "addPage.html")
 
@@ -115,7 +115,7 @@ def edit_recipe(request, pk):
 
         recipe.save()
 
-        return redirect('recipe_detail', pk=recipe.pk)
+        return redirect('recipe_detail', recipe_id=recipe.pk)
 
     return render(request, 'editRecipe.html', {
         'recipe': recipe,
@@ -140,7 +140,15 @@ def recipe_detail(request, recipe_id):
 def delete_recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     recipe.delete()
-    return redirect('recipe_list')
+    return redirect('dashboard')
+
+@login_required
+def view_dashboard(request):
+    if not request.user.is_staff:
+        return redirect('home')
+    recipes = Recipe.objects.all()
+    return render(request, 'dashboard.html', {'recipes': recipes})
+
 
 
 # ==========================================

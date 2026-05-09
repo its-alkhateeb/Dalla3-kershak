@@ -10,25 +10,22 @@
  <nav class="navbar">
      <a href="{% url 'home' %}" class="navbar-brand">El-Sofra</a>
 
-    <ul class="navbar-links">
-    <li>
-        <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
-    </li>
+     <ul class="navbar-links">
 
-    <li>
-        <a href="{% url 'recipes_list' %}" class="{% if request.resolver_match.url_name == 'recipes_list' %}active{% endif %}">Recipes</a>
-    </li>
+         <li><a href="{% url 'home' %}" class="active">Home</a></li>
 
-    {% if user.is_authenticated %}
-        <li>
-            <a href="{% url 'favorites' %}" class="{% if request.resolver_match.url_name == 'favorites' %}active{% endif %}">Favourites</a>
-        </li>
+         <li><a href="{% url 'recipes_list' %}">Recipes</a></li>
 
-        <li>
-            <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">Profile</a>
-        </li>
-    {% endif %}
-    </ul>
+         {% if user.is_authenticated %}
+             <li><a href="{% url 'favorites' %}">Favourites</a></li>
+
+             <li><a href="{% url 'profile' %}">Profile</a></li>
+        {% endif %}
+
+         {% if user.is_staff%}
+             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+         {% endif %}
+     </ul>
 
 
      <div class="navbar-auth">
@@ -37,11 +34,11 @@
 
              <img src="{{ user.profile.image.url }}" style="width: 40px ; height: 40px ; border-radius : 50%">
              <p style="color: #f2e9d0 ; font-family: 'Playfair Display' " >
-                 Welcome , <span style="   color: var(--brown-mid);
+                 Welcome   <span style="   color: var(--brown-mid);
                  background: #f2e9d0; border: 1px solid rgba(184, 134, 11, 0.3); border-radius: 50px;
                  padding: 3px 10px;  font-family: 'DM Sans', sans-serif;
                  " >{{ user.username }}</span>
-             </p>>
+             </p>
              </a>
          {% else %}
 

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import Profile
 
 class RegisterForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput(), label="Password")
@@ -26,3 +27,34 @@ class RegisterForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username']
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
+
+class PasswordChangeForm(forms.Form):
+    current_password = forms.CharField(widget=forms.PasswordInput(), label="Current Password")
+    new_password1 = forms.CharField(widget=forms.PasswordInput(), label="New Password", min_length=8)
+    new_password2 = forms.CharField(widget=forms.PasswordInput(), label="Confirm New Password")
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        current = cleaned_data.get("current_password")
+        new1 = cleaned_data.get("new_password1")
+        new2 = cleaned_data.get("new_password2")
+
+        if current and not self.user.check_password(current):
+            raise forms.ValidationError("Current password is incorrect.")
+        if new1 and new2 and new1 != new2:
+            raise forms.ValidationError("New passwords do not match.")
+        return cleaned_data

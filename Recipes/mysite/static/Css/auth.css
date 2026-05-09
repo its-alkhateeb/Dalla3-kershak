@@ -356,14 +356,6 @@ body {
 
 /* ======= Form Helpers ======= */
 
-.form-helper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  font-family: sans-serif;
-  font-size: 13px;
-}
 
 .check-label {
   display: flex;
