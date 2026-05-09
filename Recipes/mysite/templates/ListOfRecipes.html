@@ -1,31 +1,10 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}List of All Recipes{% endblock %}
 
-    <link rel="stylesheet" href="{% static 'Css/ListOfRecipes.css' %}">
-    <title>List of All Recipes</title>
-</head>
-
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-    <a href="#" class="navbar-brand">El Sofra</a>
-
-    <div class="navbar-search">
-        <input type="text" placeholder="Search recipes...">
-    </div>
-
-    <div class="navbar-auth">
-        <a href="#">
-            <img src="{% static 'icons/user.svg' %}" width="38" height="38">
-        </a>
-    </div>
-</nav>
+{% block content %}
+<link rel="stylesheet" href="{% static 'Css/ListOfRecipes.css' %}">
 
 <!-- HEADER -->
 <header>
@@ -36,16 +15,16 @@
 <section class="category-bar">
 
     <form class="cat-form">
-        <input type="radio" name="cat" id="all" checked>
+        <input type="radio" name="cat" id="all" value="all" class="cat-radio" checked>
         <label for="all" class="cat-btn">All</label>
 
-        <input type="radio" name="cat" id="main">
+        <input type="radio" name="cat" id="main" value="Main Courses" class="cat-radio">
         <label for="main" class="cat-btn">Main Dish</label>
 
-        <input type="radio" name="cat" id="app">
+        <input type="radio" name="cat" id="app" value="Appetizers" class="cat-radio">
         <label for="app" class="cat-btn">Appetizer</label>
 
-        <input type="radio" name="cat" id="dessert">
+        <input type="radio" name="cat" id="dessert" value="Desserts" class="cat-radio">
         <label for="dessert" class="cat-btn">Dessert</label>
     </form>
 
@@ -57,16 +36,19 @@
 <section class="Recipes-container">
 
     {% for recipe in recipes %}
-    <div class="recipe-card {{ recipe.category }}">
+    <div class="recipe-card" data-category="{{ recipe.category }}">
 
-       <div class="img-container">
-            <a href="{% url 'recipe_detail' recipe.id %}">
-                <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
-            </a>
+        <a href="{% url 'recipe_detail' recipe.id %}" class="card-click-area"></a>
+
+        <div class="img-container">
+            <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
+            
+            <div class="rating-badge">
+                ⭐ {{ recipe.average_rating|floatformat:1 }}
+            </div>
         </div>
 
         <div class="recipe-content">
-
             <div class="recipe-name">
                 <h2>{{ recipe.name }}</h2>
             </div>
@@ -77,10 +59,15 @@
                 <span>🍽 {{ recipe.serves|default:"--" }}</span>
             </div>
 
-            <div class="recipe-description">
-                {{ recipe.description|default:"No description" }}
+            <div class="recipe-actions">
+                {% if user.is_authenticated %}
+                <label class="fav-label">
+                    <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}" 
+                           {% if request.user in recipe.favorites.all %}checked{% endif %}>
+                    <div class="fav-btn">❤</div>
+                </label>
+                {% endif %}
             </div>
-
         </div>
     </div>
     {% endfor %}
@@ -92,5 +79,4 @@
 </footer>
 
 <script src="{% static 'js/List.js' %}"></script>
-</body>
-</html>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Recipe
+from .models import Recipe, Rating
 
 
 @admin.register(Recipe)
@@ -26,3 +26,4 @@ class RecipeAdmin(admin.ModelAdmin):
             '<img src="{}" width="50"/>',
             obj.image.url
         )
+admin.site.register(Rating)

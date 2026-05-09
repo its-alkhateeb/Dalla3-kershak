@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from .models import Recipe
+from .models import Recipe, Rating
 from django.contrib.auth.decorators import login_required
 
 
@@ -14,8 +14,11 @@ def recipes_list(request):
 def home(request):
     return render(request, 'Home.html')
 
+
+@login_required
 def favourites(request):
-    return render(request, 'Favourites.html')
+    my_favorites = request.user.favorite_recipes.all()
+    return render(request, 'Favourites.html', {'recipes': my_favorites})
 
 
 
@@ -138,3 +141,44 @@ def delete_recipe(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     recipe.delete()
     return redirect('recipe_list')
+
+
+# ==========================================
+# 1. ADD / REMOVE FAVORITE LOGIC
+# ==========================================
+@login_required
+def toggle_favorite(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+
+    # If the user is already in the favorites list, remove them.
+    if request.user in recipe.favorites.all():
+        recipe.favorites.remove(request.user)
+        is_favorited = False
+    # If they aren't in the list, add them.
+    else:
+        recipe.favorites.add(request.user)
+        is_favorited = True
+
+    return JsonResponse({'success': True, 'is_favorited': is_favorited})
+
+
+# ==========================================
+# 2. SAVE RATING LOGIC
+# ==========================================
+@login_required
+def rate_recipe(request, recipe_id):
+    if request.method == "POST":
+        # Get the score from the request
+        score = request.POST.get('score')
+        recipe = get_object_or_404(Recipe, id=recipe_id)
+
+        # update or create rating for this user
+        Rating.objects.update_or_create(
+            recipe=recipe,
+            user=request.user,
+            defaults={'score': score}
+        )
+
+        return JsonResponse({'success': True, 'new_average': recipe.average_rating()})
+
+    return JsonResponse({'success': False})

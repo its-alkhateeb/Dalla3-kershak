@@ -1,58 +1,88 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
 {% load static %}
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Favourites Page</title>
+{% block title %}My Favourite Recipes | El Sofra{% endblock %}
 
-    {% block content %}
-    <link rel="stylesheet" href="{% static 'css/favourites.css' %}">
+{% block content %}
+<link rel="stylesheet" href="{% static 'Css/ListOfRecipes.css' %}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
-</head>
+<!-- HEADER -->
+<header>
+    <h1>My Favourite Recipes</h1>
+</header>
 
-<body>
+<!-- CATEGORY -->
+<section class="category-bar">
 
-<nav class="navbar">
-    <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
+    <form class="cat-form">
+        <input type="radio" name="cat" id="all" value="all" class="cat-radio" checked>
+        <label for="all" class="cat-btn">All</label>
 
-    <div class="navbar-search">
-        <img src="{% static 'icons/magnifying-glass.svg' %}" width="15" height="15">
-        <input type="text" placeholder="Search recipes...">
+        <input type="radio" name="cat" id="main" value="Main Courses" class="cat-radio">
+        <label for="main" class="cat-btn">Main Dish</label>
+
+        <input type="radio" name="cat" id="app" value="Appetizers" class="cat-radio">
+        <label for="app" class="cat-btn">Appetizer</label>
+
+        <input type="radio" name="cat" id="dessert" value="Desserts" class="cat-radio">
+        <label for="dessert" class="cat-btn">Dessert</label>
+    </form>
+
+</section>
+
+<hr>
+
+<!-- RECIPES -->
+<section class="Recipes-container">
+
+    {% for recipe in recipes %}
+        {% for recipe in recipes %}
+        {% empty %}
+        <div class="empty-favorites">
+            <p>You haven't favorited any recipes yet! Go explore the <a href="{% url 'recipes_list' %}">Recipe List</a>.</p>
+        </div>
+        {% endfor %}
+        <div class="recipe-card" data-category="{{ recipe.category }}">
+
+        <a href="{% url 'recipe_detail' recipe.id %}" class="card-click-area"></a>
+
+        <div class="img-container">
+            <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
+            
+            <div class="rating-badge">
+                ⭐ {{ recipe.average_rating|floatformat:1 }}
+            </div>
+        </div>
+
+        <div class="recipe-content">
+            <div class="recipe-name">
+                <h2>{{ recipe.name }}</h2>
+            </div>
+
+            <div class="recipe-metadata">
+                <span>🔥 {{ recipe.calories|default:"--" }} cal</span>
+                <span>⏱ {{ recipe.prep_time|default:"--" }}</span>
+                <span>🍽 {{ recipe.serves|default:"--" }}</span>
+            </div>
+
+            <div class="recipe-actions">
+                {% if user.is_authenticated %}
+                <label class="fav-label">
+                    <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}" 
+                           {% if request.user in recipe.favorites.all %}checked{% endif %}>
+                    <div class="fav-btn">❤</div>
+                </label>
+                {% endif %}
+            </div>
+        </div>
     </div>
+    {% endfor %}
 
-    <div class="navbar-auth">
-        <a href="{% url 'profile' %}" class="navbar-profile-icon">
-            <img src="{% static 'icons/user.svg' %}" width="38" height="38">
-        </a>
-    </div>
-</nav>
-
-<h1>Favourites Page</h1>
-
-<div class="grid">
-
-    <div class="card">
-        <img src="{% static 'images/koshari.jpg' %}" alt="Koshary">
-        <h3>Koshari</h3>
-        <button>🤎 Fav</button>
-    </div>
-
-    <div class="card">
-        <img src="{% static 'images/hawashi.webp' %}" alt="Hawawshi">
-        <h3>Hawawshi</h3>
-        <button>🤎 Fav</button>
-    </div>
-
-</div>
+</section>
 
 <footer>
-    Copyright © 2026 All rights reserved
+    Copyright © 2026
 </footer>
 
-{% endblock content %}
-</body>
-
-</html>
+<script src="{% static 'js/List.js' %}"></script>
+{% endblock %}
