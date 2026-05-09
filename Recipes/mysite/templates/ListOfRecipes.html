@@ -11,6 +11,33 @@
     <h1>List of All Recipes</h1>
 </header>
 
+<!-- SEARCH -->
+<section class="search-bar">
+    <form method="GET" action="{% url 'recipes_list' %}">
+        <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            placeholder="Search by dish name or ingredient..."
+            class="search-input"
+        >
+        <button type="submit" class="search-btn">Search</button>
+        {% if query %}
+            <a href="{% url 'recipes_list' %}" class="clear-btn">✕ Clear</a>
+        {% endif %}
+    </form>
+</section>
+
+{% if query %}
+    <p class="search-results-label">
+        {% if recipes %}
+            Showing {{ recipes|length }} result{{ recipes|length|pluralize }} for "<strong>{{ query }}</strong>"
+        {% else %}
+            No recipes found for "<strong>{{ query }}</strong>"
+        {% endif %}
+    </p>
+{% endif %}
+
 <!-- CATEGORY -->
 <section class="category-bar">
 
@@ -73,11 +100,11 @@
         </div>
     </div>
 
-    {% empty %}
-    <div class="empty-favorites">
-        <p>You haven't favorited any recipes yet! Go explore the <a href="{% url 'recipes_list' %}">Recipe List</a>.</p>
+   {% empty %}
+    <div class="no-results">
+        <p> No recipes found for "<strong>{{ query }}</strong>". Try a different search!</p>
     </div>
-    {% endfor %}
+{% endfor %}
 
 </section>
 <footer>

@@ -3,13 +3,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Recipe, Rating
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 
 
 def recipes_list(request):
+    query = request.GET.get('q', '').strip()
     recipes = Recipe.objects.all()
-    return render(request, 'ListOfRecipes.html', {'recipes': recipes})
 
+    if query:
+        recipes = recipes.filter(
+            Q(name__icontains=query) |
+            Q(ingredients__icontains=query)
+        )
+
+    return render(request, 'ListOfRecipes.html', {
+        'recipes': recipes,
+        'query': query,
+    })
 
 def home(request):
     return render(request, 'Home.html')
