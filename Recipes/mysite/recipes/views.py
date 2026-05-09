@@ -119,6 +119,16 @@ def edit_recipe(request, pk):
         'ingredients': ingredients_list,
         'instructions': instructions_list,
     })
+def recipe_detail(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    ingredients_list = recipe.ingredients.split('\n')
+    instructions_list = recipe.instructions.split('\n')
+    context = {
+        'recipe': recipe,
+        'ingredients_list': ingredients_list,
+        'instructions_list': instructions_list
+    }
+    return render(request, 'recipe_detail.html', context)
 
 
 
