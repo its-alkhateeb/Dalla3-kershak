@@ -1,13 +1,71 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {% block content %}
-</head>
-<body>
+{% load static %}
 
-{% endblock content %}
-</body>
-</html>
+{% block title %}El Sofra — Sign In{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'Css/auth.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<main class="auth-page">
+  <div class="auth-wrap">
+
+    <!-- Left decorative panel -->
+    <div class="auth-panel">
+      <div class="panel-ornament">&#10022;</div>
+      <h1 class="panel-brand">El Sofra</h1>
+      <p class="panel-sub">Egyptian Kitchen</p>
+      <div class="panel-line"></div>
+      <p class="panel-msg">Welcome back.<br>Sign in to explore<br>authentic Egyptian recipes.</p>
+      <a href="{% url 'signup' %}" class="panel-btn">Create an account</a>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="auth-form-side">
+
+      {% if error_message %}
+        <div class="toast" id="toast">{{ error_message }}</div>
+      {% endif %}
+
+      <h2 class="form-title">Welcome back</h2>
+      <p class="form-sub">Good to see you again</p>
+
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <div class="fg">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" name="username" placeholder="ahmed_hassan" required>
+        </div>
+
+        <div class="fg">
+          <label for="loginPass">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="loginPass" name="password" placeholder="Your password" required>
+            <button type="button" class="eye-btn" onclick="togglePass('loginPass', this)" aria-label="Toggle password visibility">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-helper">
+          <label class="check-label">
+            <input type="checkbox" name="remember"> Remember me
+          </label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="submit-btn">Log In</button>
+
+      </form>
+
+      <p class="switch-text">Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+
+    </div>
+  </div>
+</main>
+
+{% endblock %}

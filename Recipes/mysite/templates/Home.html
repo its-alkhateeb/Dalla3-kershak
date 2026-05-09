@@ -14,42 +14,44 @@
 
 <body>
 
-  <!-- hero section -->
-  <div class="hero">
+ <div class="hero">
     <div class="hero-text">
-      <p class="tagline">Discover the Taste of Egypt</p>
-      <h1 class="heroHeader"><span class="auth">Authentic</span></h1>
+      <p class="tagline">Discover the Taste of Egypt </p>
+      <h1 class="heroHeader"><span class="auth">Authentic</span> </h1>
       <h1 class="hero-content">Egyptian Recipes</h1>
       <p class="herodiscr">Discover traditional Egyptian dishes made with love and simple ingredients.</p>
       <div class="search">
         <input type="text" id="searchInput" placeholder="Explore Recipes" class="searchInput">
-        <button id="searchBtn" class="searchBtn">Search</button>
+        <button id="searchBtn" class="searchBtn">search</button>
       </div>
       <div id="searchResults" class="results-box"></div>
     </div>
-    <div class="heroimg">
-      <img src="https://v3b.fal.media/files/b/0a920229/XTmuLgyhgpIHWH5rkqtK4_m7qyNkjO.jpg" alt="egyptian food">
-    </div>
+    <div class="heroimg"><img src="https://v3b.fal.media/files/b/0a920229/XTmuLgyhgpIHWH5rkqtK4_m7qyNkjO.jpg"
+        alt="egyptian food"></div>
+
   </div>
+
   <!-- hero section end -->
+
 
   <!-- Categories section -->
   <section class="categories-wrapper">
     <h2 style="font-size: 2rem; margin-bottom: 30px;">Our Recipe Categories</h2>
+
     <div class="categories-container">
 
       <div class="cat-card">
-        <img src="{% static 'Images/Gemini_Generated_Image_16dlv816dlv816dl.png' %}" alt="Mains">
+        <img src="imgs/Gemini_Generated_Image_16dlv816dlv816dl.png" alt="Mains">
         <h3>Main Dishes</h3>
       </div>
 
       <div class="cat-card">
-        <img src="{% static 'Images/Gemini_Generated_Image_euhvk8euhvk8euhv.png' %}" alt="Appetizers">
+        <img src="imgs/Gemini_Generated_Image_euhvk8euhvk8euhv.png" alt="Appetizers">
         <h3>Appetizers</h3>
       </div>
 
       <div class="cat-card">
-        <img src="{% static 'Images/Gemini_Generated_Image_sayfajsayfajsayf.png' %}" alt="Desserts">
+        <img src="imgs/Gemini_Generated_Image_sayfajsayfajsayf.png" alt="Desserts">
         <h3>Desserts</h3>
       </div>
 
@@ -57,8 +59,144 @@
   </section>
   <!-- Categories section end -->
 
-  <!-- FEATURED RECIPE SECTION -->
+  <!--FEATURED RECIPE SECTION-->
   <section class="featured-bg">
-    <div class="featured-inn
+    <div class="featured-inner">
 
- {% endblock content %}
+      <!-- Left: Image -->
+      <div class="featured-img-wrap">
+        <img src="imgs/Egyptian-Koshari-1.jpg" alt="Koshari">
+      </div>
+
+      <!-- Right: Text -->
+      <div class="featured-text">
+        <div class="section-label">Featured Recipe</div>
+        <h2>Egyptian Koshari</h2>
+        <p>Egypt's beloved street food — a hearty mix of rice, lentils,
+          and macaroni topped with a rich spiced tomato sauce, crispy
+          caramelized onions, and a garlicky vinegar dressing. Bold,
+          comforting, and completely irresistible.</p>
+        <a href="../RecipesPages/Koshary.html">
+          <button class="btn-readmore">Read More →</button>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  <!--FEATURED RECIPE SECTION END-->
+
+  <!--POPULAR RECIPES SECTION-->
+
+  <section class="popular-wrapper">
+    <h2 class="popular-title">Popular Recipes</h2>
+
+    <div class="popular-container">
+
+      <div class="recipe-card">
+        <img src="imgs/Egyptian-Koshari-1.jpg" alt="Koshari">
+        <div class="recipe-info">
+          <h3>Koshari</h3>
+          <p class="rating">4.9 / 5</p>
+          <a href="../RecipesPages/Koshary.html" class="view-btn">View Recipe</a>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <img src="imgs/world-cuisine-with-delicious-food.jpg" alt="Molokhia">
+        <div class="recipe-info">
+          <h3>Sambosa</h3>
+          <p class="rating">4.7 / 5</p>
+          <a href="../RecipesPages/Sambosa.html" class="view-btn">View Recipe</a>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <img src="imgs/Umm-Ali-Bread-Pudding.jpg" alt="Om Ali">
+        <div class="recipe-info">
+          <h3>Om Ali</h3>
+          <p class="rating">4.8 / 5</p>
+          <a href="../RecipesPages/Om_Ali.html" class="view-btn">View Recipe</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!--POPULAR RECIPES SECTION END-->
+
+  <!--Newsletter section-->
+
+  <div class="newsletter">
+    <hr class="top-line">
+
+    <h1 class="title">
+      Subscribe to get new recipes every week
+    </h1>
+
+    <hr class="bottom-line">
+
+    <div class="container">
+      <input type="email" placeholder="Your email" class="email-input">
+      <button class="subscribe-btn">Subscribe</button>
+    </div>
+
+  </div>
+  <!--Newsletter section End-->
+
+  <!--FOOTER SECTION-->
+  <footer>
+
+    <div class="footer-top">
+
+      <div class="about">
+        <h2 class="brand">About Us</h2>
+        <p>Our Recipe Website helps people discover easy and delicious meals to cook at home</p>
+      </div>
+
+      <div class="quick-links">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="../HomePage/Home.html" class="active">Home</a></li>
+          <li><a href="../RecipesList/ListOfRecipes.html">Recipes</a></li>
+          <li><a href="../Favourites/Favourites.html">Favourites</a></li>
+          <li><a href="../ProfilePage/Profile.html">Profile</a></li>
+        </ul>
+      </div>
+
+      <div class="contact">
+        <h4>Contact</h4>
+        <p> Phone: +20 123 456 7890</p>
+        <p> contact@elsofra.com</p>
+        <p> Cairo, Egypt</p>
+      </div>
+
+    </div>
+
+    <hr class="footer-divider">
+
+    <div class="built-by-row">
+      <span class="built-by-label">Built By</span>
+      <ul class="allFooter">
+        <li><a href="https://www.linkedin.com/in/rana-samy-698833370" target="_blank">Rana</a></li>
+        <li><a href="https://www.linkedin.com/in/tasneem-masoud-53b3b3250" target="_blank">Tasneem</a></li>
+        <li><a href="https://www.linkedin.com/in/ramez-rizk-367829248" target="_blank">Ramez</a></li>
+        <li><a href="https://www.linkedin.com/in/mohamed-al-khateeb-ab310034a" target="_blank">Mohamed</a></li>
+        <li><a href="https://www.linkedin.com/in/malak-youssef-14040b378" target="_blank">Malak</a></li>
+        <li><a href="https://www.linkedin.com/in/yassin-mohamed-8ab129346/" target="_blank">Yassin</a></li>
+      </ul>
+    </div>
+
+    <div class="copyright">
+      <p>© 2025 El Sofra · All Rights Reserved</p>
+    </div>
+
+  </footer>
+  <!--FOOTER SECTION END-->
+  <script src="home.js"></script>
+  <script src="../RecipesPages/Recipes.js"></script>
+
+{% endblock content %}
+</body>
+
+</html>

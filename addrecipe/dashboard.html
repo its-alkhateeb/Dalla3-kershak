@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Css/dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>El Sofra — Admin Dashboard</title>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
+
+    <div class="navbar-center">
+        <span class="dashboard-badge">Admin Dashboard</span>
+    </div>
+
+    <div class="navbar-auth">
+        <a href="{% url 'profile' %}" class="nav-profile-link">
+            <img src="{% static 'Icons/user.svg' %}" width="34" height="34">
+            <span>{{ request.user.username }}</span>
+        </a>
+        <form method="POST" action="{% url 'logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button type="submit" class="logout-nav-btn">Log Out</button>
+        </form>
+    </div>
+</nav>
+
+<!-- DASHBOARD HEADER -->
+<div class="dash-header">
+    <div class="dash-header-left">
+        <p class="dash-label">RECIPE MANAGEMENT</p>
+        <h1 class="dash-title">All Recipes</h1>
+        <p class="dash-sub">{{ recipes|length }} recipe{{ recipes|length|pluralize }} in the kitchen</p>
+    </div>
+    <div class="dash-header-right">
+        <a href="{% url 'add_recipe' %}" class="add-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 5v14M5 12h14"/>
+            </svg>
+            Add New Recipe
+        </a>
+    </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+    <form class="cat-form">
+        <input type="radio" name="cat" id="all" class="cat-radio" checked>
+        <label for="all" class="cat-btn">All</label>
+
+        <input type="radio" name="cat" id="main" class="cat-radio">
+        <label for="main" class="cat-btn">Main Courses</label>
+
+        <input type="radio" name="cat" id="app" class="cat-radio">
+        <label for="app" class="cat-btn">Appetizers</label>
+
+        <input type="radio" name="cat" id="dessert" class="cat-radio">
+        <label for="dessert" class="cat-btn">Desserts</label>
+    </form>
+
+    <div class="search-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="dashSearch" placeholder="Search recipes..." oninput="filterSearch(this.value)">
+    </div>
+</div>
+
+<div class="dash-divider"></div>
+
+<!-- STATS ROW -->
+<div class="stats-row">
+    <div class="stat-card">
+        <span class="stat-num">{{ recipes|length }}</span>
+        <span class="stat-label">Total Recipes</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-num">{% with recipes|length as total %}{{ total }}{% endwith %}</span>
+        <span class="stat-label">Published</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Categories</span>
+    </div>
+</div>
+
+<!-- RECIPE GRID -->
+<section class="recipes-grid">
+
+    {% for recipe in recipes %}
+    <div class="dash-card {{ recipe.category }} show">
+
+        <!-- Image -->
+        <div class="card-img-wrap">
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="card-img">
+            <div class="card-category-badge">{{ recipe.category }}</div>
+        </div>
+
+        <!-- Content -->
+        <div class="card-body">
+            <h2 class="card-title">{{ recipe.name }}</h2>
+
+            <div class="card-meta">
+                <span>🔥 {{ recipe.calories|default:"—" }}</span>
+                <span>⏱ {{ recipe.prep_time|default:"—" }}</span>
+                <span>🍽 {{ recipe.serves|default:"—" }}</span>
+            </div>
+
+            <p class="card-desc">{{ recipe.description|default:"No description provided."|truncatewords:18 }}</p>
+
+            <!-- Actions -->
+            <div class="card-actions">
+                <a href="{% url 'edit_recipe' recipe.pk %}" class="action-btn edit-btn">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Edit
+                </a>
+
+                <form method="POST" action="{% url 'delete_recipe' recipe.pk %}" style="margin:0;"
+                      onsubmit="return confirm('Delete {{ recipe.name }}? This cannot be undone.')">
+                    {% csrf_token %}
+                    <button type="submit" class="action-btn delete-btn">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                            <path d="M10 11v6M14 11v6"/>
+                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                        </svg>
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    {% empty %}
+    <div class="empty-state">
+        <p class="empty-icon">🍽</p>
+        <h3>No recipes yet</h3>
+        <p>Start by adding your first recipe to the kitchen.</p>
+        <a href="{% url 'add_recipe' %}" class="add-btn" style="margin-top:16px; display:inline-flex;">
+            + Add First Recipe
+        </a>
+    </div>
+    {% endfor %}
+
+</section>
+
+<footer class="dash-footer">
+    <p>El Sofra Admin Panel &nbsp;·&nbsp; &copy; 2026</p>
+</footer>
+
+<script>
+// Category filter
+document.querySelectorAll('.cat-radio').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const id = this.id;
+        const map = { all: null, main: 'Main Courses', app: 'Appetizers', dessert: 'Desserts' };
+        const selected = map[id];
+        document.querySelectorAll('.dash-card').forEach(card => {
+            if (!selected || card.classList.contains(selected)) {
+                card.classList.add('show');
+            } else {
+                card.classList.remove('show');
+            }
+        });
+    });
+});
+
+// Search filter
+function filterSearch(val) {
+    const q = val.toLowerCase();
+    document.querySelectorAll('.dash-card').forEach(card => {
+        const name = card.querySelector('.card-title').textContent.toLowerCase();
+        card.style.display = name.includes(q) ? '' : 'none';
+    });
+}
+</script>
+
+</body>
+</html>

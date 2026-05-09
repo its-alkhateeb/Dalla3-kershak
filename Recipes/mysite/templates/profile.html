@@ -1,36 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}My Profile{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
-{% endblock %}
+{% block title %}{{ user.username }} — Profile{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'Css/profile.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet">
+
 <section class="profile-card">
 
-    <img src="{% static 'images/profile-picture.png' %}" class="avatar">
+    <img src="{{ user.profile.image.url }}" class="avatar" alt="Profile picture">
 
-    <h1>Guest User</h1>
-    <p>Member since: 2026</p>
+    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+    <p class="username">@{{ user.username }}</p>
+    <p class="email">{{ user.email }}</p>
+    <p class="since">Member since: {{ user.date_joined|date:"F Y" }}</p>
 
-    <p>
-        <a href="#">Open Favorites List</a>
-    </p>
+    {% if user.is_staff %}
+        <span class="role-badge admin">Admin</span>
+    {% else %}
+        <span class="role-badge">User</span>
+    {% endif %}
 
     <hr>
 
     <h3>Account Settings</h3>
 
-    <button>Change Profile Picture</button>
-    <button>Change Username</button>
-    <button>Change Password</button>
+    <button class="profile-btn">Change Profile Picture</button>
+    <button class="profile-btn">Change Username</button>
+    <button class="profile-btn">Change Password</button>
 
-    <br><br>
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="profile-btn logout-btn">Log Out</button>
+    </form>
 
-    <a href="{% url 'home' %}">Back to Home</a>
+    <a href="{% url 'home' %}">← Back to Home</a>
 
 </section>
+
 {% endblock %}

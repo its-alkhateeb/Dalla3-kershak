@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}El Sofra — Sign Up{% endblock %}
+
+{% block content %}
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'Css/auth.css' %}">
+
+<main class="auth-page">
+  <div class="auth-wrap">
+
+    <!-- Left decorative panel -->
+    <div class="auth-panel">
+      <div class="panel-ornament">&#10022;</div>
+      <h1 class="panel-brand">El Sofra</h1>
+      <p class="panel-sub">Egyptian Kitchen</p>
+      <div class="panel-line"></div>
+      <p class="panel-msg">Already have<br>an account?<br>Sign in below.</p>
+      <a href="{% url 'login' %}" class="panel-btn">Sign in</a>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="auth-form-side">
+
+    {% if messages %}
+  {% for message in messages %}
+    <p style="color:red; font-size: 1rem ; font-family: sans-serif ; margin: 5px" >{{ message }}</p>
+  {% endfor %}
+{% endif %}
+
+      <h2 class="form-title">Join the table</h2>
+      <p class="form-sub">Create your free account</p>
+
+      <form method="POST" action="{% url 'signup' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+          <div class="profile-upload">
+              <label for="profilePic" class="profile-label">Profile picture</label>
+              <label for="profilePic" class="profile-circle" id="profileCircle">
+                <img id="profilePreview" src="../media/default.jpg" alt="Preview">
+                  <input type="file" id="profilePic" name="profile_picture" accept="image/*" hidden>
+              </label>
+          </div>
+
+        <div class="role-row">
+          <div class="role-pill active" id="roleUser" onclick="pickRole('user')">User</div>
+          <div class="role-pill" id="roleAdmin" onclick="pickRole('admin')">Admin</div>
+        </div>
+        <input type="hidden" name="is_admin" id="isAdminInput" value="false">
+
+        <div class="row-two">
+          <div class="fg">
+            <label for="sFirst">First name</label>
+            <input type="text" id="sFirst" name="first_name" placeholder="Ahmed" required minlength="2">
+          </div>
+          <div class="fg">
+            <label for="sLast">Last name</label>
+            <input type="text" id="sLast" name="last_name" placeholder="Hassan" required minlength="2">
+          </div>
+        </div>
+
+        <div class="fg">
+          <label for="sEmail">Email</label>
+          <input type="email" id="sEmail" name="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="fg">
+          <label for="sUsername">Username</label>
+          <input type="text" id="sUsername" name="username" placeholder="ahmed_hassan" required>
+        </div>
+
+        <div class="fg">
+          <label for="sPass">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="sPass" name="password1" placeholder="Min. 8 characters" required minlength="8" oninput="checkStrength(this.value)">
+            <button type="button" class="eye-btn" onclick="togglePass('sPass', this)" aria-label="Toggle password visibility">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <div class="strength-bar">
+            <span id="b1"></span><span id="b2"></span>
+            <span id="b3"></span><span id="b4"></span>
+          </div>
+          <div class="strength-label" id="strengthLabel"></div>
+        </div>
+
+        <div class="fg">
+          <label for="sConf">Confirm password</label>
+          <div class="input-wrap">
+            <input type="password" id="sConf" name="password2" placeholder="Re-enter your password" required>
+            <button type="button" class="eye-btn" onclick="togglePass('sConf', this)" aria-label="Toggle confirm">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Show form errors from Django -->
+        {% if form.errors %}
+          <ul class="error-list">
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li style="color:red; font-size:0.85rem; font-family: sans-serif ; margin: 5px ">{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <li style="color:red; font-size:1rem font-family: sans-serif ; margin: 5px;">{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <label class="check-label terms-label">
+          <input type="checkbox" id="terms" required>
+          I agree to the <a href="#">terms &amp; conditions</a>
+        </label>
+
+        <button type="submit" class="submit-btn">Create Account</button>
+
+      </form>
+
+      <p class="switch-text">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+
+    </div>
+  </div>
+</main>
+
+{#<script src="{% static 'js/SignUp.js' %}"></script>#}
+
+<script>
+  // Role pill — sets hidden input so Django view knows admin vs user
+  function pickRole(role) {
+    document.getElementById('roleUser').classList.toggle('active', role === 'user');
+    document.getElementById('roleAdmin').classList.toggle('active', role === 'admin');
+    document.getElementById('isAdminInput').value = role === 'admin' ? 'true' : 'false';
+  }
+
+  // Profile picture preview
+document.getElementById('profilePic').addEventListener('change', function () {
+  const file = this.files[0];
+  const circle = document.getElementById('profileCircle');
+  const preview = document.getElementById('profilePreview');
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+      circle.classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = '';
+    circle.classList.remove('has-image');
+  }
+});
+
+function togglePass(id, btn) {
+  const input = document.getElementById(id);
+  const isText = input.type === 'text';
+  input.type = isText ? 'password' : 'text';
+  btn.style.color = isText ? '#b8a080' : '#b8860b';
+}
+
+function checkStrength(val) {
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+
+  const colors = ['#e0c89a', '#e24b4a', '#ef9f27', '#b8860b', '#3b6d11'];
+  const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('b' + i).style.background =
+      i <= score ? colors[score] : '#e0c89a';
+  }
+
+  document.getElementById('strengthLabel').textContent =
+    val.length ? labels[score] : '';
+}
+</script>
+
+{% endblock %}
