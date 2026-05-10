@@ -1,91 +1,171 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{% static 'Css/addPage.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
+{% block title %}Add New Recipe — El Sofra{% endblock %}
 
-    <title>Add New Recipe</title>
-</head>
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/addPage.css' %}">
 
-<body style="background-color: #fdf6ee;">
+<div class="add-page-bg">
 
-<!-- navbar -->
-<nav class="navbar">
-    <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
+  <div class="page-header">
+    <h1 class="page-title">Add New Recipe</h1>
+    <p class="page-sub">Share your Egyptian masterpiece</p>
+  </div>
 
-    <div class="navbar-search">
-        <img src="{% static 'Icons/magnifying-glass.svg' %}" width="15">
-        <input type="text" placeholder="Search recipes...">
+  <form method="POST" enctype="multipart/form-data" class="form-card">
+    
+
+    <!-- IMAGE UPLOAD -->
+    <div class="img-upload-wrap">
+      <label for="inputimg" class="img-upload-label">
+        <img id="recipePreview" src="{% static 'Images/add recipe.webp' %}" alt="Recipe photo preview">
+        <div class="img-overlay">
+          <span>&#128247; Change Photo</span>
+        </div>
+      </label>
+      <input type="file" id="inputimg" name="image" accept="image/*">
+      <p class="img-hint">Click to upload a recipe photo</p>
     </div>
 
-    <div class="navbar-auth">
-        <a href="{% url 'profile' %}">
-            <img src="{% static 'Icons/user.svg' %}" width="38">
-        </a>
+    <hr class="form-divider">
+
+    <!-- RECIPE NAME -->
+    <div class="fg">
+      <label class="field-label" for="recipeName">Recipe Name</label>
+      <input class="form-input" type="text" id="recipeName" name="name" placeholder="e.g. Koshari, Mahshi, Om Ali..." required>
     </div>
-</nav>
 
-<!-- content -->
-<div class="content">
-    <h1>Add New Egyptian Masterpiece</h1>
+    <!-- CATEGORY -->
+    <div class="fg">
+      <span class="field-label">Category</span>
+      <div class="radio-row">
+        <input class="radio-input" type="radio" id="cat-app" name="category" value="Appetizers" required>
+        <label class="radio-pill" for="cat-app">Appetizers</label>
 
-    <form method="POST" enctype="multipart/form-data" class="form-card">
-        {% csrf_token %}
+        <input class="radio-input" type="radio" id="cat-main" name="category" value="Main Courses">
+        <label class="radio-pill" for="cat-main">Main Course</label>
 
-        <!-- IMAGE -->
-        <div class="image">
-            <h2>Add Recipe Photo</h2>
-            <label for="inputimg">
-               <img id="Recipeimg" src="{% static 'Images/add recipe.webp' %}" width="200">
-            </label>
-            <input type="file" id="inputimg" name="image" accept="image/*">
-       </div>
+        <input class="radio-input" type="radio" id="cat-des" name="category" value="Desserts">
+        <label class="radio-pill" for="cat-des">Dessert</label>
+      </div>
+    </div>
 
-        <!-- NAME -->
-        <h2>Recipe Name</h2>
-        <input type="text" name="name" required>
+    <!-- DESCRIPTION -->
+    <div class="fg">
+      <label class="field-label" for="recipeDesc">Description</label>
+      <textarea class="form-textarea" id="recipeDesc" name="description" rows="3" placeholder="Write a short description of the dish..." required></textarea>
+    </div>
 
-        <!-- CATEGORY -->
-        <h2>Category</h2>
+    <hr class="form-divider">
 
-        <input type="radio" name="category" value="Appetizers" required> Appetizers
-        <input type="radio" name="category" value="Main Courses"> Main
-        <input type="radio" name="category" value="Desserts"> Dessert
+    <!-- CALORIES / SERVES / PREP TIME -->
+    <div class="three-col">
+      <div class="field-wrap">
+        <label class="field-label" for="calories">Calories</label>
+        <input class="form-input" type="text" id="calories" name="calories" placeholder="e.g. 520 kcal">
+      </div>
+      <div class="field-wrap">
+        <label class="field-label" for="serves">Serves</label>
+        <input class="form-input" type="text" id="serves" name="serves" placeholder="e.g. 4 people">
+      </div>
+      <div class="field-wrap">
+        <label class="field-label" for="preptime">Prep Time</label>
+        <input class="form-input" type="text" id="preptime" name="prep_time" placeholder="e.g. 30 min">
+      </div>
+    </div>
 
-        <!-- DESCRIPTION -->
-        <h2>Description</h2>
-        <textarea name="description" rows="8" cols="50" required></textarea>
+    <hr class="form-divider">
 
-        <!-- INFO -->
-        <h2>Calories</h2>
-        <input type="text" name="calories">
+    <!-- INGREDIENTS -->
+    <span class="field-label">Ingredients</span>
+    <div id="ingredients-list" style="margin-top: 10px;">
+      <div class="ing-row">
+        <input class="ing-input" type="text" name="ingredients" placeholder="e.g. 2 cups rice" required>
+        <button type="button" class="remove-btn" onclick="removeRow(this)" aria-label="Remove ingredient">&#10005;</button>
+      </div>
+    </div>
+    <button type="button" class="add-link" id="add-ingredient-btn">
+      <span>+</span> Add Ingredient
+    </button>
 
-        <h2>Serves</h2>
-        <input type="text" name="serves">
+    <hr class="form-divider">
 
-        <h2>Prep Time</h2>
-        <input type="text" name="prep_time">
+    <!-- INSTRUCTIONS -->
+    <span class="field-label">Instructions</span>
+    <div id="instructions-list" style="margin-top: 10px;">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <input class="step-input" type="text" name="instructions" placeholder="Describe the first step..." required>
+        <button type="button" class="remove-btn" onclick="removeRow(this)" aria-label="Remove step">&#10005;</button>
+      </div>
+    </div>
+    <button type="button" class="add-link" id="add-step-btn">
+      <span>+</span> Add Step
+    </button>
 
-        <!-- INGREDIENTS -->
-        <h2>Ingredients</h2>
-        <textarea name="ingredients" rows="8" cols="50" placeholder="Enter ingredients " required></textarea>
+    {% if error %}
+    <p class="form-error">{{ error }}</p>
+    {% endif %}
 
-        <!-- INSTRUCTIONS -->
-        <h2>Instructions</h2>
+    <!-- SUBMIT -->
+    <div class="submit-row">
+      <button type="submit" class="btn-primary">Save Recipe</button>
+      <a href="{% url 'recipes_list' %}" class="btn-outline">Cancel</a>
+    </div>
 
-       <textarea name="instructions" rows="8" cols="50" placeholder="Enter instructions " required></textarea>
-
-        <!-- SUBMIT -->
-        <br><br>
-        <button type="submit">Save Recipe</button>
-    </form>
+  </form>
 </div>
 
-<script src="{% static 'js/addPage.js' %}"></script>
+<script>
+  // Image preview
+  document.getElementById('inputimg').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('recipePreview').src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
-</body>
-</html>
+  // Add ingredient
+  document.getElementById('add-ingredient-btn').addEventListener('click', function () {
+    const list = document.getElementById('ingredients-list');
+    const row = document.createElement('div');
+    row.className = 'ing-row';
+    row.innerHTML = `
+      <input class="ing-input" type="text" name="ingredients" placeholder="e.g. 1 tsp cumin">
+      <button type="button" class="remove-btn" onclick="removeRow(this)" aria-label="Remove ingredient">&#10005;</button>
+    `;
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  });
+
+  // Add step
+  document.getElementById('add-step-btn').addEventListener('click', function () {
+    const list = document.getElementById('instructions-list');
+    const count = list.querySelectorAll('.step-row').length + 1;
+    const row = document.createElement('div');
+    row.className = 'step-row';
+    row.innerHTML = `
+      <div class="step-num">${count}</div>
+      <input class="step-input" type="text" name="instructions" placeholder="Describe this step...">
+      <button type="button" class="remove-btn" onclick="removeRow(this)" aria-label="Remove step">&#10005;</button>
+    `;
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  });
+
+  // Remove row + renumber steps
+  function removeRow(btn) {
+    const row = btn.closest('.ing-row, .step-row');
+    const list = row.parentElement;
+    row.remove();
+    // renumber steps if needed
+    list.querySelectorAll('.step-num').forEach((el, i) => el.textContent = i + 1);
+  }
+</script>
+
+{% endblock %}

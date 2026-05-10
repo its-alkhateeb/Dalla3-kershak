@@ -1,137 +1,160 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'Css/editRecipe.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
-    <title>Edit Recipe</title>
-</head>
 
-<body style="background-color: #fdf6ee;">
+{% block title %}Edit Recipe — El Sofra{% endblock %}
 
-    <!-- navbar -->
-    <nav class="navbar">
-        <a href="{% url 'home' %}" class="navbar-brand">El Sofra</a>
-        <div class="navbar-search">
-            <img src="{% static 'Icons/magnifying-glass.svg' %}" alt="search" width="15" height="15">
-            <input type="text" placeholder="Search recipes...">
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/editRecipe.css' %}">
+
+<div class="add-page-bg">
+
+  <div class="page-header">
+    <h1 class="page-title">Edit Recipe</h1>
+    <p class="page-sub">Update your masterpiece: {{ recipe.name }}</p>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data" class="form-card">
+    {% csrf_token %}
+
+    <div class="img-upload-wrap">
+      <label for="inputimg" class="img-upload-label">
+        <img id="recipePreview" src="{% if recipe.image %}{{ recipe.image.url }}{% else %}{% static 'Images/add recipe.webp' %}{% endif %}" alt="Recipe photo">
+        <div class="img-overlay">
+          <span>&#128247; Change Photo</span>
         </div>
-        <div class="navbar-auth">
-            <a href="{% url 'profile' %}" class="navbar-profile-icon">
-                <img src="{% static 'Icons/user.svg' %}" width="38" height="38">
-            </a>
-        </div>
-    </nav>
-    <!-- navbar end -->
-
-    <div class="content">
-        <h1>Edit Recipe</h1>
-
-        <form method="POST" class="form-card">
-            {% csrf_token %}
-
-            <!-- Recipe Name -->
-            <div class="idnamesec">
-                <div class="idname">
-                    <h2>Recipe Name</h2>
-                    <input type="text" name="name" id="recipeName" required value="{{ recipe.name }}">
-                </div>
-            </div>
-
-            <!-- Category -->
-            <div class="form-section">
-                <h2>Choose Course Name</h2>
-                <div class="form-sectionRadio">
-                    <div>
-                        <input class="radio-input" type="radio" id="appetizer" name="category" value="Appetizers"
-                            {% if recipe.category == 'Appetizers' %}checked{% endif %} required>
-                        <label class="radio-label" for="appetizer">Appetizers</label>
-                    </div>
-                    <div>
-                        <input class="radio-input" type="radio" id="main" name="category" value="Main Courses"
-                            {% if recipe.category == 'Main Courses' %}checked{% endif %} required>
-                        <label class="radio-label" for="main">Main Course</label>
-                    </div>
-                    <div>
-                        <input class="radio-input" type="radio" id="dessert" name="category" value="Desserts"
-                            {% if recipe.category == 'Desserts' %}checked{% endif %} required>
-                        <label class="radio-label" for="dessert">Dessert</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Description -->
-            <div class="form-section">
-                <h2>Description</h2>
-                <textarea name="description" rows="3" placeholder="Write a short description..." required>{{ recipe.description }}</textarea>
-            </div>
-
-            <!-- Calories / Serves / Prep Time -->
-            <div class="idnamesec">
-                <div class="idname">
-                    <h2>Calories</h2>
-                    <input type="text" name="calories" placeholder="e.g. 520 kcal" value="{{ recipe.calories }}">
-                </div>
-                <div class="idname">
-                    <h2>Serves</h2>
-                    <input type="text" name="serves" placeholder="e.g. 4 people" value="{{ recipe.serves }}">
-                </div>
-                <div class="idname">
-                    <h2>Prep Time</h2>
-                    <input type="text" name="prep_time" placeholder="e.g. 30 min" value="{{ recipe.prep_time }}">
-                </div>
-            </div>
-
-            <!-- Ingredients -->
-            <div id="ingredients">
-                <div class="ingredientSec">
-                    <h2>Ingredients</h2>
-                    {% for ingredient in ingredients %}
-                    <div class="fixedingredient">
-                        <input type="text" name="ingredients[]" value="{{ ingredient }}" required>
-                    </div>
-                    {% endfor %}
-                    <div id="extra-ingredients"></div>
-                    <button type="button" id="add-btn">+ Add Ingredient</button>
-                </div>
-            </div>
-
-            <!-- Instructions -->
-            <div class="form-section">
-                <h2>Instructions</h2>
-                {% for step in instructions %}
-                <div class="fixedingredient">
-                    <input type="text" name="instructions[]" value="{{ step }}" required>
-                </div>
-                {% endfor %}
-                <div id="extra-instructions"></div>
-                <button type="button" id="add-step-btn">+ Add Step</button>
-            </div>
-
-            {% if error %}
-            <p style="color: red; text-align: center;">{{ error }}</p>
-            {% endif %}
-
-            <div style="display:flex; gap:16px; justify-content:center; margin-top:20px;">
-                <input class="submitbtn" type="submit" value="Save Changes">
-                <a href="{% url 'recipes_list' %}"
-                   style="padding:10px 28px; border-radius:50px; border:2px solid #5C4033;
-                          color:#5C4033; text-decoration:none; font-family:sans-serif;">
-                    Cancel
-                </a>
-            </div>
-
-        </form>
+      </label>
+      <input type="file" id="inputimg" name="image" accept="image/*">
+      <p class="img-hint">Click to update the recipe photo</p>
     </div>
 
-    <footer>
-        <hr>
-        <p><small>&copy; 2025 El Sofra · All Rights Reserved</small></p>
-    </footer>
+    <hr class="form-divider">
 
-    <script src="{% static 'js/editRecipe.js' %}"></script>
+    <div class="fg">
+      <label class="field-label" for="recipeName">Recipe Name</label>
+      <input class="form-input" type="text" id="recipeName" name="name" value="{{ recipe.name }}" required>
+    </div>
 
-</body>
-</html>
+    <div class="fg">
+      <span class="field-label">Category</span>
+      <div class="radio-row">
+        <input class="radio-input" type="radio" id="cat-app" name="category" value= "Appetizers" {% if recipe.category == 'Appetizers' %}checked{% endif %} required>
+        <label class="radio-pill" for="cat-app">Appetizers</label>
+
+        <input class="radio-input" type="radio" id="cat-main" name="category" value= "Main Courses" {% if recipe.category == 'Main Courses' %}checked{% endif %}>
+        <label class="radio-pill" for="cat-main">Main Course</label>
+
+        <input class="radio-input" type="radio" id="cat-des" name="category" value= "Desserts" {% if recipe.category == 'Desserts' %}checked{% endif %}>
+        <label class="radio-pill" for="cat-des">Dessert</label>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="field-label" for="recipeDesc">Description</label>
+      <textarea class="form-textarea" id="recipeDesc" name="description" rows="3" required>{{ recipe.description }}</textarea>
+    </div>
+
+    <hr class="form-divider">
+
+    <div class="three-col">
+      <div class="field-wrap">
+        <label class="field-label" for="calories">Calories</label>
+        <input class="form-input" type="text" id="calories" name="calories" value="{{ recipe.calories }}">
+      </div>
+      <div class="field-wrap">
+        <label class="field-label" for="serves">Serves</label>
+        <input class="form-input" type="text" id="serves" name="serves" value="{{ recipe.serves }}">
+      </div>
+      <div class="field-wrap">
+        <label class="field-label" for="preptime">Prep Time</label>
+        <input class="form-input" type="text" id="preptime" name="prep_time" value="{{ recipe.prep_time }}">
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <span class="field-label">Ingredients</span>
+    <div id="ingredients-list" style="margin-top: 10px;">
+      {% for ingredient in ingredients %}
+      <div class="ing-row">
+        <input class="ing-input" type="text" name="ingredients" value="{{ ingredient }}" required>
+        <button type="button" class="remove-btn" onclick="removeRow(this)">&#10005;</button>
+      </div>
+      {% endfor %}
+    </div>
+    <button type="button" class="add-link" id="add-ingredient-btn">
+      <span>+</span> Add Ingredient
+    </button>
+
+    <hr class="form-divider">
+
+    <span class="field-label">Instructions</span>
+    <div id="instructions-list" style="margin-top: 10px;">
+      {% for step in instructions %}
+      <div class="step-row">
+        <div class="step-num">{{ forloop.counter }}</div>
+        <input class="step-input" type="text" name="instructions" value="{{ step }}" required>
+        <button type="button" class="remove-btn" onclick="removeRow(this)">&#10005;</button>
+      </div>
+      {% endfor %}
+    </div>
+    <button type="button" class="add-link" id="add-step-btn">
+      <span>+</span> Add Step
+    </button>
+
+    {% if error %}
+    <p class="form-error">{{ error }}</p>
+    {% endif %}
+
+    <div class="submit-row">
+      <button type="submit" class="btn-primary">Update Recipe</button>
+      <a href="{% url 'recipes_list' %}" class="btn-outline">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+<script>
+  document.getElementById('inputimg').addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => { document.getElementById('recipePreview').src = e.target.result; };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  document.getElementById('add-ingredient-btn').addEventListener('click', function () {
+    const list = document.getElementById('ingredients-list');
+    const row = document.createElement('div');
+    row.className = 'ing-row';
+    row.innerHTML = `
+      <input class=\"ing-input\" type=\"text\" name=\"ingredients\" placeholder=\"e.g. 1 tsp cumin\" required>
+      <button type=\"button\" class=\"remove-btn\" onclick=\"removeRow(this)\">&#10005;</button>
+    `;
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  });
+
+  document.getElementById('add-step-btn').addEventListener('click', function () {
+    const list = document.getElementById('instructions-list');
+    const count = list.querySelectorAll('.step-row').length + 1;
+    const row = document.createElement('div');
+    row.className = 'step-row';
+    row.innerHTML = `
+      <div class=\"step-num\">${count}</div>
+      <input class=\"step-input\" type=\"text\" name=\"instructions\" placeholder=\"Describe this step...\" required>
+      <button type=\"button\" class=\"remove-btn\" onclick=\"removeRow(this)\">&#10005;</button>
+    `;
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  });
+
+  function removeRow(btn) {
+    const row = btn.closest('.ing-row, .step-row');
+    const list = row.parentElement;
+    row.remove();
+    // Renumber steps if a step was removed
+    list.querySelectorAll('.step-num').forEach((el, i) => el.textContent = i + 1);
+  }
+</script>
+{% endblock %}
