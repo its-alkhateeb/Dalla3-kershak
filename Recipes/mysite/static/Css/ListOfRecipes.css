@@ -484,3 +484,12 @@ footer {
     color: #888;
     font-size: 1.1rem;
 }
+.recipe-actions {
+    position: relative;
+    z-index: 10;
+}
+
+.recipe-actions form {
+    position: relative;
+    z-index: 10;
+}

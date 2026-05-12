@@ -1,10 +1,8 @@
-from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from .models import Recipe, Rating
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
 
 def recipes_list(request):
     query = request.GET.get('q', '').strip()
@@ -180,23 +178,40 @@ def toggle_favorite(request, recipe_id):
     return JsonResponse({'success': True, 'is_favorited': is_favorited})
 
 
-# ==========================================
-# 2. SAVE RATING LOGIC
-# ==========================================
+ 
+ 
+def recipes_list(request):
+    query = request.GET.get('q', '')
+ 
+    if query:
+        recipes = Recipe.objects.filter(name__icontains=query)
+    else:
+        recipes = Recipe.objects.all()
+ 
+   
+    user_ratings = {}
+    if request.user.is_authenticated:
+        my_ratings = Rating.objects.filter(user=request.user)
+        for r in my_ratings:
+            user_ratings[r.recipe_id] = r.score
+ 
+    return render(request, 'ListOfRecipes.html', {
+        'recipes': recipes,
+        'query': query,
+        'user_ratings': user_ratings,   
+    })
+ 
+ 
 @login_required
 def rate_recipe(request, recipe_id):
     if request.method == "POST":
-        # Get the score from the request
         score = request.POST.get('score')
         recipe = get_object_or_404(Recipe, id=recipe_id)
 
-        # update or create rating for this user
         Rating.objects.update_or_create(
             recipe=recipe,
             user=request.user,
             defaults={'score': score}
         )
 
-        return JsonResponse({'success': True, 'new_average': recipe.average_rating()})
-
-    return JsonResponse({'success': False})
+    return redirect('recipes_list')

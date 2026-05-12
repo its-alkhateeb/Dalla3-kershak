@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load dict_extras %}
 
 {% block title %}List of All Recipes{% endblock %}
 
@@ -40,7 +41,6 @@
 
 <!-- CATEGORY -->
 <section class="category-bar">
-
     <form class="cat-form">
         <input type="radio" name="cat" id="all" value="all" class="cat-radio" checked>
         <label for="all" class="cat-btn">All</label>
@@ -54,7 +54,6 @@
         <input type="radio" name="cat" id="dessert" value="Desserts" class="cat-radio">
         <label for="dessert" class="cat-btn">Dessert</label>
     </form>
-
 </section>
 
 <hr>
@@ -63,10 +62,10 @@
 <section class="Recipes-container">
 
     {% for recipe in recipes %}
-        
-    <div class="recipe-card" data-category="{{ recipe.category }}">
+    <div class="recipe-card show" data-category="{{ recipe.category }}" 
+     onclick="window.location='{% url "recipe_detail" recipe.id %}'">
 
-        <a href="{% url 'recipe_detail' recipe.id %}" class="card-click-area"></a>
+        
 
         <div class="img-container">
             {% if recipe.image %}
@@ -74,6 +73,8 @@
             {% else %}
                 <img src="{% static 'Images/default_recipe.jpg' %}" class="recipe-img" alt="{{ recipe.name }}">
             {% endif %}
+
+            <!-- Average rating badge -->
             <div class="rating-badge">
                 ⭐ {{ recipe.average_rating|floatformat:1 }}
             </div>
@@ -88,30 +89,134 @@
                 <span>⏱ {{ recipe.prep_time|default:"--" }}</span>
                 <span>🍽 {{ recipe.serves|default:"--" }}</span>
             </div>
+
             <div class="recipe-actions">
+
+                <!-- STAR RATING FORM (only shown to logged-in users) -->
                 {% if user.is_authenticated %}
-                <label class="fav-label">
+                <form method="POST" action="{% url 'rate_recipe' recipe.id %}" onclick="event.stopPropagation()">
+                    {% csrf_token %}
+                    <div class="star-form">
+                        <!-- 5 radio buttons, one per star. Hidden radios, styled labels. -->
+                        {% for i in "54321" %}
+                        <input
+                            type="radio"
+                            name="score"
+                            id="star-{{ recipe.id }}-{{ i }}"
+                            value="{{ i }}"
+                            {% if user_ratings|get_item:recipe.id == i|add:"0" %}checked{% endif %}
+                        >
+                        <label for="star-{{ recipe.id }}-{{ i }}" title="{{ i }} stars">★</label>
+                        {% endfor %}
+                        <button type="submit" class="rate-submit-btn">Rate</button>
+                    </div>
+                </form>
+                {% else %}
+                <p class="login-to-rate"><a href="{% url 'login' %}">Sign in</a> to rate</p>
+                {% endif %}
+
+                <!-- Favourite button (unchanged) -->
+                {% if user.is_authenticated %}
+                <label class="fav-label" onclick="event.stopPropagation()">
                     <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}"
                            {% if request.user in recipe.favorites.all %}checked{% endif %}>
                     <div class="fav-btn">❤</div>
                 </label>
                 {% endif %}
+
             </div>
         </div>
     </div>
-
-   {% empty %}
+    {% empty %}
     <div class="no-results">
-        <p> No recipes found for "<strong>{{ query }}</strong>". Try a different search!</p>
+        <p>No recipes found for "<strong>{{ query }}</strong>". Try a different search!</p>
     </div>
-{% endfor %}
+    {% endfor %}
 
 </section>
+
 <footer>
     Copyright © 2026
 </footer>
 
+<style>
+/* ── Star Rating Form ─────────────────────────── */
+
+/* Hide the actual radio inputs */
+.star-form input[type="radio"] {
+    display: none;
+}
+
+.star-form {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    /* Stars are written 5→1 in HTML so CSS "checked ~ label" trick works.
+       We reverse them visually with flex-direction. */
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+/* Each star label */
+.star-form label {
+    font-size: 1.4rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+/* When a radio is checked, colour that star and all stars after it (visually before, due to reverse) */
+.star-form input[type="radio"]:checked ~ label,
+.star-form input[type="radio"]:checked ~ label ~ label {
+    color: #b8860b;
+}
+
+/* Hover effect: colour hovered star and all stars "above" it */
+.star-form label:hover,
+.star-form label:hover ~ label {
+    color: #d4a017;
+}
+
+/* Small submit button */
+.rate-submit-btn {
+    margin-left: 6px;
+    background: #b8860b;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+}
+.rate-submit-btn:hover {
+    background: #9a720a;
+}
+
+.login-to-rate {
+    font-size: 0.75rem;
+    color: #907659;
+}
+.login-to-rate a {
+    color: #b8860b;
+}
+.recipe-card {
+    cursor: pointer;
+}
+
+.recipe-actions,
+.recipe-actions form,
+.recipe-actions label,
+.star-form,
+.star-btn,
+.fav-label {
+    pointer-events: auto; /* ← these stay clickable */
+    position: relative;
+    z-index: 10;
+}
+</style>
+
 <script src="{% static 'js/List.js' %}"></script>
 {% endblock content %}
-</body>
-</html>
