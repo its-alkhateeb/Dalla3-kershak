@@ -4,20 +4,20 @@ from .models import Recipe, Rating
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-def recipes_list(request):
-    query = request.GET.get('q', '').strip()
-    recipes = Recipe.objects.all()
-
-    if query:
-        recipes = recipes.filter(
-            Q(name__icontains=query) |
-            Q(ingredients__icontains=query)
-        )
-
-    return render(request, 'ListOfRecipes.html', {
-        'recipes': recipes,
-        'query': query,
-    })
+# def recipes_list(request):
+#     query = request.GET.get('q', '').strip()
+#     recipes = Recipe.objects.all()
+#
+#     if query:
+#         recipes = recipes.filter(
+#             Q(name__icontains=query) |
+#             Q(ingredients__icontains=query)
+#         )
+#
+#     return render(request, 'ListOfRecipes.html', {
+#         'recipes': recipes,
+#         'query': query,
+#     })
 
 def home(request):
     return render(request, 'Home.html')
@@ -180,25 +180,47 @@ def toggle_favorite(request, recipe_id):
 
  
  
+# def recipes_list(request):
+#     query = request.GET.get('q', '')
+#
+#     if query:
+#         recipes = Recipe.objects.filter(name__icontains=query)
+#     else:
+#         recipes = Recipe.objects.all()
+#
+#
+#     user_ratings = {}
+#     if request.user.is_authenticated:
+#         my_ratings = Rating.objects.filter(user=request.user)
+#         for r in my_ratings:
+#             user_ratings[r.recipe_id] = r.score
+#
+#     return render(request, 'ListOfRecipes.html', {
+#         'recipes': recipes,
+#         'query': query,
+#         'user_ratings': user_ratings,
+#     })
+
 def recipes_list(request):
-    query = request.GET.get('q', '')
- 
+    query = request.GET.get('q', '').strip()
+    recipes = Recipe.objects.all()
+
     if query:
-        recipes = Recipe.objects.filter(name__icontains=query)
-    else:
-        recipes = Recipe.objects.all()
- 
-   
+        recipes = recipes.filter(
+            Q(name__icontains=query) |
+            Q(ingredients__icontains=query)
+        )
+
     user_ratings = {}
     if request.user.is_authenticated:
         my_ratings = Rating.objects.filter(user=request.user)
         for r in my_ratings:
             user_ratings[r.recipe_id] = r.score
- 
+
     return render(request, 'ListOfRecipes.html', {
         'recipes': recipes,
         'query': query,
-        'user_ratings': user_ratings,   
+        'user_ratings': user_ratings,
     })
  
  
