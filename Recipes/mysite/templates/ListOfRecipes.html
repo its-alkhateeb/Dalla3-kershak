@@ -62,7 +62,7 @@
 <section class="Recipes-container">
 
     {% for recipe in recipes %}
-    <div class="recipe-card show" data-category="{{ recipe.category }}" 
+    <div class="recipe-card show" data-category="{{ recipe.category }}"
      onclick="window.location='{% url "recipe_detail" recipe.id %}'">
 
         
@@ -93,8 +93,7 @@
             <div class="recipe-actions">
 
                 <!-- STAR RATING FORM (only shown to logged-in users) -->
-
-                {% if not user.is_staff %}
+                {% if user.is_authenticated %}
                 <form method="POST" action="{% url 'rate_recipe' recipe.id %}" onclick="event.stopPropagation()">
                     {% csrf_token %}
                     <div class="star-form">
@@ -112,8 +111,7 @@
                         <button type="submit" class="rate-submit-btn">Rate</button>
                     </div>
                 </form>
-                {% endif %}
-                {% if not user.is_authenticated %}
+                {% else %}
                 <p class="login-to-rate"><a href="{% url 'login' %}">Sign in</a> to rate</p>
                 {% endif %}
 

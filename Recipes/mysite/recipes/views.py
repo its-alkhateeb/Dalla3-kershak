@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .models import Recipe, Rating
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+import json
 
 # def recipes_list(request):
 #     query = request.GET.get('q', '').strip()
@@ -19,8 +20,7 @@ from django.db.models import Q
 #         'query': query,
 #     })
 
-def home(request):
-    return render(request, 'Home.html')
+
 
 
 @login_required
@@ -203,23 +203,33 @@ def toggle_favorite(request, recipe_id):
 
 def recipes_list(request):
     query = request.GET.get('q', '').strip()
+    category = request.GET.get('category', '').strip()
+
     recipes = Recipe.objects.all()
 
+    # Search
     if query:
         recipes = recipes.filter(
             Q(name__icontains=query) |
             Q(ingredients__icontains=query)
         )
 
+    # Category filter
+    if category:
+        recipes = recipes.filter(category__iexact=category)
+
+    # Ratings
     user_ratings = {}
     if request.user.is_authenticated:
         my_ratings = Rating.objects.filter(user=request.user)
+
         for r in my_ratings:
             user_ratings[r.recipe_id] = r.score
 
     return render(request, 'ListOfRecipes.html', {
         'recipes': recipes,
         'query': query,
+        'selected_category': category,
         'user_ratings': user_ratings,
     })
  
@@ -237,3 +247,14 @@ def rate_recipe(request, recipe_id):
         )
 
     return redirect('recipes_list')
+
+
+
+def home(request):
+    recipes = Recipe.objects.all()
+    featured_recipe = recipes.first()
+
+    return render(request, "Home.html", {
+        "recipes_json": json.dumps(list(recipes.values("id", "name"))),
+        "featured_recipe": featured_recipe
+    })

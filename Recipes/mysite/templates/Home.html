@@ -26,6 +26,7 @@
       </div>
       <div id="searchResults" class="results-box"></div>
     </div>
+   <script>const recipes = JSON.parse('{{ recipes_json|escapejs }}');</script>
     <div class="heroimg"><img src="https://v3b.fal.media/files/b/0a920229/XTmuLgyhgpIHWH5rkqtK4_m7qyNkjO.jpg"
         alt="egyptian food"></div>
 
@@ -40,20 +41,20 @@
 
     <div class="categories-container">
 
-      <div class="cat-card">
-        <img src="imgs/Gemini_Generated_Image_16dlv816dlv816dl.png" alt="Mains">
-        <h3>Main Dishes</h3>
-      </div>
+     <div class="cat-card" onclick="goToCategory('Main Courses')">
+    <img src="{% static 'Images/mains.png' %}" alt="Mains">
+    <h3>Main Dishes</h3>
+     </div>
 
-      <div class="cat-card">
-        <img src="imgs/Gemini_Generated_Image_euhvk8euhvk8euhv.png" alt="Appetizers">
-        <h3>Appetizers</h3>
-      </div>
+<div class="cat-card" onclick="goToCategory('Appetizers')">
+    <img src="{% static 'Images/Appetizers.jpg' %}" alt="Appetizers">
+    <h3>Appetizers</h3>
+</div>
 
-      <div class="cat-card">
-        <img src="imgs/Gemini_Generated_Image_sayfajsayfajsayf.png" alt="Desserts">
-        <h3>Desserts</h3>
-      </div>
+<div class="cat-card" onclick="goToCategory('Desserts')">
+    <img src="{% static 'Images/Dessert.jpg' %}" alt="Desserts">
+    <h3>Desserts</h3>
+</div>
 
     </div>
   </section>
@@ -65,7 +66,7 @@
 
       <!-- Left: Image -->
       <div class="featured-img-wrap">
-        <img src="imgs/Egyptian-Koshari-1.jpg" alt="Koshari">
+        <img src="{%static 'Images/koshari.jpg'%}" alt="Koshari">
       </div>
 
       <!-- Right: Text -->
@@ -76,9 +77,9 @@
           and macaroni topped with a rich spiced tomato sauce, crispy
           caramelized onions, and a garlicky vinegar dressing. Bold,
           comforting, and completely irresistible.</p>
-        <a href="../RecipesPages/Koshary.html">
-          <button class="btn-readmore">Read More →</button>
-        </a>
+        <a href="{% url 'recipe_detail' featured_recipe.id %}">
+  <button class="btn-readmore">Read More →</button>
+</a>
       </div>
 
     </div>
@@ -93,29 +94,29 @@
     <div class="popular-container">
 
       <div class="recipe-card">
-        <img src="imgs/Egyptian-Koshari-1.jpg" alt="Koshari">
+        <img src="{%static 'Images/koshari.jpg'%}" alt="Koshari">
         <div class="recipe-info">
           <h3>Koshari</h3>
           <p class="rating">4.9 / 5</p>
-          <a href="../RecipesPages/Koshary.html" class="view-btn">View Recipe</a>
+          <a href="{% url 'recipe_detail' 1 %}" class="view-btn">View Recipe</a>
         </div>
       </div>
 
       <div class="recipe-card">
-        <img src="imgs/world-cuisine-with-delicious-food.jpg" alt="Molokhia">
+        <img src="{%static 'Images/Aloo-Samosa-Recipe-Step-By-Step-Instructions.jpg'%}" alt="Sambosa">
         <div class="recipe-info">
           <h3>Sambosa</h3>
           <p class="rating">4.7 / 5</p>
-          <a href="../RecipesPages/Sambosa.html" class="view-btn">View Recipe</a>
+          <a href="{% url 'recipe_detail' 22 %}" class="view-btn">View Recipe</a>
         </div>
       </div>
 
       <div class="recipe-card">
-        <img src="imgs/Umm-Ali-Bread-Pudding.jpg" alt="Om Ali">
+        <img src="{%static 'Images/Umm_Ali.jpg'%}" alt="Om Ali">
         <div class="recipe-info">
           <h3>Om Ali</h3>
           <p class="rating">4.8 / 5</p>
-          <a href="../RecipesPages/Om_Ali.html" class="view-btn">View Recipe</a>
+          <a href="{% url 'recipe_detail' 18 %}" class="view-btn">View Recipe</a>
         </div>
       </div>
 
@@ -157,10 +158,10 @@
       <div class="quick-links">
         <h4>Explore</h4>
         <ul>
-          <li><a href="../HomePage/Home.html" class="active">Home</a></li>
-          <li><a href="../RecipesList/ListOfRecipes.html">Recipes</a></li>
-          <li><a href="../Favourites/Favourites.html">Favourites</a></li>
-          <li><a href="../ProfilePage/Profile.html">Profile</a></li>
+          <li><a href="{% url 'home' %}" class="active">Home</a></li>
+          <li><a href="{% url 'recipes_list' %}">Recipes</a></li>
+          <li><a href="{% url 'favorites' %}">Favourites</a></li>
+          <li><a href="{% url 'profile' %}">Profile</a></li>
         </ul>
       </div>
 
@@ -193,8 +194,7 @@
 
   </footer>
   <!--FOOTER SECTION END-->
-  <script src="home.js"></script>
-  <script src="../RecipesPages/Recipes.js"></script>
+  <script src="{% static 'js/Home.js' %}"></script>
 
 {% endblock content %}
 </body>
