@@ -3,83 +3,70 @@ const searchBtn = document.getElementById("searchBtn");
 const resultsBox = document.getElementById("searchResults");
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  const searchInput = document.getElementById("searchInput");
-  const searchBtn = document.getElementById("searchBtn");
-  const resultsBox = document.getElementById("searchResults");
-
   if (!searchInput || !searchBtn || !resultsBox) return;
 
-  // LIVE SEARCH
+  // LIVE SEARCH dropdown
   searchInput.addEventListener("input", function () {
-
     const query = searchInput.value.toLowerCase().trim();
-
     resultsBox.innerHTML = "";
 
-    if (query === "") return;
+    if (!query) {
+      resultsBox.classList.remove('has-results');
+      return;
+    }
 
-    recipes.forEach(recipe => {
+    const matches = recipes.filter(r => r.name.toLowerCase().includes(query));
 
-      if (recipe.name.toLowerCase().includes(query)) {
-
-        const item = document.createElement("div");
-
-        item.textContent = recipe.name;
-
-        item.classList.add("result-item");
-
-        item.onclick = function () {
-
-          searchInput.value = recipe.name;
-
-          resultsBox.innerHTML = "";
-
-        };
-
-        resultsBox.appendChild(item);
-      }
-    });
-  });
-
-  // SEARCH BUTTON
-  searchBtn.addEventListener("click", function () {
-
-    const query = searchInput.value.toLowerCase().trim();
-
-    const found = recipes.find(recipe =>
-      recipe.name.toLowerCase().includes(query)
-    );
-
-    if (found) {
-      window.location.href = `/recipes/${found.id}/`;
+    if (matches.length === 0) {
+      const item = document.createElement("div");
+      item.textContent = "No matches — press Enter to search all recipes";
+      item.classList.add("result-item");
+      resultsBox.appendChild(item);
     } else {
-      alert("Recipe not found!");
+      matches.forEach(recipe => {
+        const item = document.createElement("div");
+        item.textContent = recipe.name;
+        item.classList.add("result-item");
+        item.onclick = function () {
+          window.location.href = `/recipes/?q=${encodeURIComponent(recipe.name)}`;
+        };
+        resultsBox.appendChild(item);
+      });
     }
+    resultsBox.classList.add('has-results');
   });
 
-  // ENTER KEY
+  // SEARCH BUTTON / ENTER → Recipes list with query
+  function doSearch() {
+    const query = searchInput.value.trim();
+    if (query) {
+      window.location.href = `/recipes/?q=${encodeURIComponent(query)}`;
+    }
+  }
+
+  searchBtn.addEventListener("click", doSearch);
   searchInput.addEventListener("keydown", function (e) {
-
-    if (e.key === "Enter") {
-      searchBtn.click();
-    }
+    if (e.key === "Enter") doSearch();
   });
 
-  // CLOSE RESULTS
+  // Click outside to close
   document.addEventListener("click", function (e) {
-
-    if (!searchInput.contains(e.target) &&
-        !resultsBox.contains(e.target)) {
-
+    if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
       resultsBox.innerHTML = "";
+      resultsBox.classList.remove('has-results');
     }
   });
-
 });
 
 function goToCategory(category) {
-
-    window.location.href =
-    `/recipes/?category=${encodeURIComponent(category)}`;
+  window.location.href = `/recipes/?category=${encodeURIComponent(category)}`;
 }
+
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });

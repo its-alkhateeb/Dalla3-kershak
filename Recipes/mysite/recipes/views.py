@@ -203,33 +203,24 @@ def toggle_favorite(request, recipe_id):
 
 def recipes_list(request):
     query = request.GET.get('q', '').strip()
-    category = request.GET.get('category', '').strip()
 
     recipes = Recipe.objects.all()
 
-    # Search
     if query:
         recipes = recipes.filter(
             Q(name__icontains=query) |
             Q(ingredients__icontains=query)
         )
 
-    # Category filter
-    if category:
-        recipes = recipes.filter(category__iexact=category)
-
-    # Ratings
     user_ratings = {}
     if request.user.is_authenticated:
         my_ratings = Rating.objects.filter(user=request.user)
-
         for r in my_ratings:
             user_ratings[r.recipe_id] = r.score
 
     return render(request, 'ListOfRecipes.html', {
         'recipes': recipes,
         'query': query,
-        'selected_category': category,
         'user_ratings': user_ratings,
     })
  

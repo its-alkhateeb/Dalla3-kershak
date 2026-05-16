@@ -1,33 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load dict_extras %}
 
 {% block title %}My Favourite Recipes | El Sofra{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'Css/ListOfRecipes.css' %}">
+<style>
+  .recipe-card { animation-delay: 0ms !important; }
+  .recipe-card.show { animation: fadeIn 0.3s ease forwards; }
+</style>
 
-<!-- HEADER -->
-<header>
+<header class="page-header">
     <h1>My Favourite Recipes</h1>
+    <p class="page-sub">Your personal collection</p>
+    <section class="search-bar">
+        <form method="GET" action="{% url 'recipes_list' %}">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search by dish name or ingredient..." class="search-input">
+            <button type="submit" class="search-btn">Search</button>
+            {% if query %}
+                <a href="{% url 'recipes_list' %}" class="clear-btn">✕ Clear</a>
+            {% endif %}
+        </form>
+    </section>
 </header>
-
-
-<!-- SEARCH -->
-<section class="search-bar">
-    <form method="GET" action="{% url 'recipes_list' %}">
-        <input
-            type="text"
-            name="q"
-            value="{{ query }}"
-            placeholder="Search by dish name or ingredient..."
-            class="search-input"
-        >
-        <button type="submit" class="search-btn">Search</button>
-        {% if query %}
-            <a href="{% url 'recipes_list' %}" class="clear-btn">✕ Clear</a>
-        {% endif %}
-    </form>
-</section>
 
 {% if query %}
     <p class="search-results-label">
@@ -38,56 +34,43 @@
         {% endif %}
     </p>
 {% endif %}
-
-
-<!-- CATEGORY -->
+    
+    
 <section class="category-bar">
+    <form class="cat-form" id="categoryForm">
+        <input type="radio" name="cat" id="fav_all" value="all" class="cat-radio" checked>
+        <label for="fav_all" class="cat-btn">All</label>
 
-    <form class="cat-form">
-        <input type="radio" name="cat" id="all" value="all" class="cat-radio" checked>
-        <label for="all" class="cat-btn">All</label>
+        <input type="radio" name="cat" id="fav_main" value="Main Courses" class="cat-radio">
+        <label for="fav_main" class="cat-btn">Main Dish</label>
 
-        <input type="radio" name="cat" id="main" value="Main Courses" class="cat-radio">
-        <label for="main" class="cat-btn">Main Dish</label>
+        <input type="radio" name="cat" id="fav_app" value="Appetizers" class="cat-radio">
+        <label for="fav_app" class="cat-btn">Appetizer</label>
 
-        <input type="radio" name="cat" id="app" value="Appetizers" class="cat-radio">
-        <label for="app" class="cat-btn">Appetizer</label>
-
-        <input type="radio" name="cat" id="dessert" value="Desserts" class="cat-radio">
-        <label for="dessert" class="cat-btn">Dessert</label>
+        <input type="radio" name="cat" id="fav_dessert" value="Desserts" class="cat-radio">
+        <label for="fav_dessert" class="cat-btn">Dessert</label>
     </form>
-
 </section>
 
-<hr>
+<hr style="border: none; border-top: 1px solid rgba(184,134,11,0.2); margin: 0 40px 20px;">
 
-<!-- RECIPES -->
 <section class="Recipes-container">
-
     {% for recipe in recipes %}
-        {% for recipe in recipes %}
-        {% empty %}
-        <div class="empty-favorites">
-            <p>You haven't favorited any recipes yet! Go explore the <a href="{% url 'recipes_list' %}">Recipe List</a>.</p>
-        </div>
-        {% endfor %}
-        <div class="recipe-card" data-category="{{ recipe.category }}">
-
+    <div class="recipe-card show" data-category="{{ recipe.category }}">
         <a href="{% url 'recipe_detail' recipe.id %}" class="card-click-area"></a>
 
         <div class="img-container">
-            <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
-            
-            <div class="rating-badge">
-                ⭐ {{ recipe.average_rating|floatformat:1 }}
-            </div>
+            {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="recipe-img" alt="{{ recipe.name }}">
+            {% else %}
+                <img src="{% static 'Images/default_recipe.jpg' %}" class="recipe-img" alt="{{ recipe.name }}">
+            {% endif %}
+            <div class="recipe-category"><p>{{ recipe.category }}</p></div>
+            <div class="rating-badge">⭐ {{ recipe.average_rating|floatformat:1 }}</div>
         </div>
 
         <div class="recipe-content">
-            <div class="recipe-name">
-                <h2>{{ recipe.name }}</h2>
-            </div>
-
+            <div class="recipe-name"><h2>{{ recipe.name }}</h2></div>
             <div class="recipe-metadata">
                 <span>🔥 {{ recipe.calories|default:"--" }} cal</span>
                 <span>⏱ {{ recipe.prep_time|default:"--" }}</span>
@@ -95,29 +78,96 @@
             </div>
 
             <div class="recipe-actions">
+                {% if user.is_authenticated and not user.is_staff %}
+                <form method="POST" action="{% url 'rate_recipe' recipe.id %}" onclick="event.stopPropagation()">
+                    {% csrf_token %}
+                    <div class="star-form">
+                        {% for i in "54321" %}
+                        <input type="radio" name="score" id="fav-star-{{ recipe.id }}-{{ i }}" value="{{ i }}"
+                            {% if user_ratings|get_item:recipe.id == i|add:"0" %}checked{% endif %}>
+                        <label for="fav-star-{{ recipe.id }}-{{ i }}" title="{{ i }} stars">★</label>
+                        {% endfor %}
+                        <button type="submit" class="rate-submit-btn">Rate</button>
+                    </div>
+                </form>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                <p class="login-to-rate"><a href="{% url 'login' %}">Sign in</a> to rate</p>
+                {% endif %}
+
                 {% if user.is_authenticated %}
-                <label class="fav-label">
-                    <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}" 
-                           {% if request.user in recipe.favorites.all %}checked{% endif %}>
+                <label class="fav-label" onclick="event.stopPropagation()">
+                    <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}" checked>
                     <div class="fav-btn">❤</div>
                 </label>
                 {% endif %}
             </div>
         </div>
     </div>
-
-
     {% empty %}
-    <div class="empty-favorites">
-        <p>You haven't favorited any recipes yet! Go explore the <a href="{% url 'recipes_list' %}">Recipe List</a>.</p>
+    <div class="no-results" style="grid-column: 1 / -1;">
+        <p>You haven't favorited any recipes yet! Go explore the <a href="{% url 'recipes_list' %}" style="color: #b8860b;">Recipe List</a>.</p>
     </div>
     {% endfor %}
-
 </section>
 
 <footer>
-    Copyright © 2026
+    <p>El Sofra &copy; 2026</p>
 </footer>
 
 <script src="{% static 'js/List.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const container = document.querySelector('.Recipes-container');
+
+    container.addEventListener('change', function (e) {
+        if (!e.target.classList.contains('fav-checkbox')) return;
+        const checkbox = e.target;
+        const card = checkbox.closest('.recipe-card');
+        const recipeId = checkbox.dataset.id;
+
+        // Only animate when UNchecking (removing from favorites)
+        if (!checkbox.checked) {
+            // Re-check immediately so the heart stays filled during animation
+            checkbox.checked = true;
+
+            // Add the fade-out animation class
+            card.classList.add('removing');
+
+            // After animation ends, send the unfavorite request and remove card
+            card.addEventListener('animationend', function () {
+                fetch(`/recipes/favorite/${recipeId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value ||
+                                       getCookie('csrftoken'),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then(() => {
+                    card.remove();
+                    // Show "no results" if all cards are gone
+                    if (container.querySelectorAll('.recipe-card').length === 0) {
+                        container.innerHTML = '<div class="no-results" style="grid-column: 1 / -1;"><p>You haven\'t favorited any recipes yet! Go explore the <a href="/recipes/" style="color: #b8860b;">Recipe List</a>.</p></div>';
+                    }
+                });
+            }, { once: true });
+        }
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
 {% endblock %}

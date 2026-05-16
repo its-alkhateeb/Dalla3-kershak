@@ -1,18 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}El Sofra — Admin Dashboard{% endblock %}
+{% block title %}El Sofra — Admin Dashboard{% endblock %}
+
 {% block content %}
-    <link rel="stylesheet" href="{% static 'Css/dashboard.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'Css/dashboard.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
-</head>
-
-<body>
-<!-- DASHBOARD HEADER -->
 <div class="dash-header">
     <div class="dash-header-left">
         <p class="dash-label">RECIPE MANAGEMENT</p>
@@ -26,7 +20,6 @@
     </a>
 </div>
 
-<!-- TOOLBAR -->
 <div class="toolbar">
     <div class="stats">
         <div class="stat">
@@ -64,7 +57,6 @@
     </div>
 </div>
 
-<!-- TABLE -->
 <div class="table-wrap">
     <table class="recipe-table">
         <thead>
@@ -88,20 +80,16 @@
                         <img src="{% static 'Images/default_recipe.jpg' %}" alt="{{ recipe.name }}">
                     {% endif %}
                 </td>
-
                 <td class="td-name">
                     <span class="recipe-name-text">{{ recipe.name }}</span>
                     <span class="recipe-desc-text">{{ recipe.description|truncatewords:10 }}</span>
                 </td>
-
                 <td class="td-category">
                     <span class="cat-badge cat-{{ recipe.category|slugify }}">{{ recipe.category }}</span>
                 </td>
-
                 <td class="td-meta">{{ recipe.calories|default:"—" }}</td>
                 <td class="td-meta">{{ recipe.prep_time|default:"—" }}</td>
                 <td class="td-meta">{{ recipe.serves|default:"—" }}</td>
-
                 <td class="td-actions">
                     <a href="{% url 'edit_recipe' recipe.pk %}" class="action-btn edit-btn">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -124,7 +112,6 @@
                         </button>
                     </form>
                 </td>
-
             </tr>
             {% empty %}
             <tr>
@@ -145,15 +132,11 @@
 document.querySelectorAll('.cat-radio').forEach(radio => {
     radio.addEventListener('change', function () {
        const map = { all: null, main: 'Main Courses', app: 'Appetizers', dessert: 'Desserts' };
-const selected = map[this.id];
-document.querySelectorAll('.recipe-row').forEach(row => {
-    if (!selected) {
-        row.style.display = '';
-    } else {
-        const category = row.dataset.category;
-        row.style.display = (category === selected) ? '' : 'none';
-    }
-});
+       const selected = map[this.id];
+       document.querySelectorAll('.recipe-row').forEach(row => {
+           if (!selected) { row.style.display = ''; }
+           else { row.style.display = (row.dataset.category === selected) ? '' : 'none'; }
+       });
     });
 });
 
@@ -165,5 +148,3 @@ function filterSearch(val) {
 }
 </script>
 {% endblock %}
-</body>
-</html>

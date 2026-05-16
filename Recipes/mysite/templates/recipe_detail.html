@@ -5,61 +5,81 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'Css/RecipesStyle.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet" />
 
-<header align="center">
-    <h1>{{ recipe.name }}</h1>
-    <p class="brif-desc">{{ recipe.description }}</p>
-</header>
-
-<div class="Info-Container">
-    <div class="Info-Card">
-        <img class="Icons" src="{% static 'Icons/circular-clock.svg' %}">
-        <p class="Info-Card-Lable">PREP. TIME:</p>
-        <p class="Info-Card-Value">{{ recipe.prep_time }}</p>
-    </div>
-    <div class="Info-Card" >
-        <img class="Icons" src="{% static 'Icons/fork.svg' %}">
-        <p class="Info-Card-Lable">SERVINGS:</p>
-         <p class="Info-Card-Value">{{ recipe.serves }}</p>
-    </div>
-    <div class="Info-Card" >
-        <img class="Icons" src="{% static 'Icons/salad.svg' %}">
-        <p class="Info-Card-Lable">CALORIES:</p>
-         <p class="Info-Card-Value">{{ recipe.calories }}</p>
+<div class="recipe-hero">
+    {% if recipe.image %}
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+    {% else %}
+        <img src="{% static 'Images/default_recipe.jpg' %}" alt="{{ recipe.name }}">
+    {% endif %}
+    <div class="recipe-hero-overlay">
+        <h1>{{ recipe.name }}</h1>
+        <p>{{ recipe.description }}</p>
     </div>
 </div>
 
-<div class="Recipe-Body">
-    <div class="Ingredients">
-        <h2>Ingredients:</h2>
+<div class="info-bar">
+    <div class="info-item">
+        <img class="info-icon" src="{% static 'Icons/circular-clock.svg' %}" alt="Time">
+        <span class="info-label">Prep. Time</span>
+        <span class="info-value">{{ recipe.prep_time|default:"—" }}</span>
+    </div>
+    <div class="info-item">
+        <img class="info-icon" src="{% static 'Icons/fork.svg' %}" alt="Servings">
+        <span class="info-label">Servings</span>
+        <span class="info-value">{{ recipe.serves|default:"—" }}</span>
+    </div>
+    <div class="info-item">
+        <img class="info-icon" src="{% static 'Icons/salad.svg' %}" alt="Calories">
+        <span class="info-label">Calories</span>
+        <span class="info-value">{{ recipe.calories|default:"—" }}</span>
+    </div>
+</div>
+
+<div class="actions-bar">
+    <a href="{% url 'recipes_list' %}" class="btn-back">← Back to Recipes</a>
+    {% if user.is_staff %}
+    <a href="{% url 'edit_recipe' recipe.pk %}" class="btn-back" style="background: var(--gold);">✎ Edit Recipe</a>
+    {% endif %}
+</div>
+
+<div class="recipe-detail-grid">
+    <div class="ingredients-panel">
+        <h2>Ingredients</h2>
         <ul>
             {% for ingredient in ingredients_list %}
+                {% if ingredient.strip %}
                 <li>{{ ingredient }}</li>
+                {% endif %}
             {% endfor %}
         </ul>
     </div>
-    <div class="Image">
+    
+    <div class="detail-image-wrap">
         {% if recipe.image %}
             <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+        {% else %}
+            <img src="{% static 'Images/default_recipe.jpg' %}" alt="{{ recipe.name }}">
         {% endif %}
     </div>
 </div>
 
-<div class="Prep-section">
-    <h2>Preparation:</h2>
-    <div class="Steps">
+<div class="prep-panel">
+    <h2>Preparation</h2>
+    <div class="steps-list">
         {% for step in instructions_list %}
-        <div class="Step">
-            <p class="Step-num">{{ forloop.counter }}</p>
-            <p class="Step-text">{{ step }}</p>
-        </div>
+            {% if step.strip %}
+            <div class="step-item">
+                <div class="step-number">{{ forloop.counter }}</div>
+                <div class="step-text">{{ step }}</div>
+            </div>
+            {% endif %}
         {% endfor %}
     </div>
 </div>
 
-<br><br>
-<footer align="center">
-    <hr>
-    <p><small>&copy; 2026 Recipe Finder Project</small></p>
+<footer class="detail-footer">
+    <p>El Sofra &copy; 2026 · Authentic Egyptian Recipes</p>
 </footer>
 {% endblock %}

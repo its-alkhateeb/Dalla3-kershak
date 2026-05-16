@@ -6,28 +6,25 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'Css/ListOfRecipes.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet" />
+<style>
+  .recipe-card { animation-delay: 0ms !important; }
+  .recipe-card.show { animation: fadeIn 0.3s ease forwards; }
+</style>
 
-<!-- HEADER -->
-<header>
+<header class="page-header">
     <h1>List of All Recipes</h1>
+    <p class="page-sub">Explore the flavors of Egypt</p>
+    <section class="search-bar">
+        <form method="GET" action="{% url 'recipes_list' %}">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search by dish name or ingredient..." class="search-input">
+            <button type="submit" class="search-btn">Search</button>
+            {% if query %}
+                <a href="{% url 'recipes_list' %}" class="clear-btn">✕ Clear</a>
+            {% endif %}
+        </form>
+    </section>
 </header>
-
-<!-- SEARCH -->
-<section class="search-bar">
-    <form method="GET" action="{% url 'recipes_list' %}">
-        <input
-            type="text"
-            name="q"
-            value="{{ query }}"
-            placeholder="Search by dish name or ingredient..."
-            class="search-input"
-        >
-        <button type="submit" class="search-btn">Search</button>
-        {% if query %}
-            <a href="{% url 'recipes_list' %}" class="clear-btn">✕ Clear</a>
-        {% endif %}
-    </form>
-</section>
 
 {% if query %}
     <p class="search-results-label">
@@ -39,33 +36,32 @@
     </p>
 {% endif %}
 
-<!-- CATEGORY -->
 <section class="category-bar">
-    <form class="cat-form">
-        <input type="radio" name="cat" id="all" value="all" class="cat-radio" checked>
-        <label for="all" class="cat-btn">All</label>
+    <form class="cat-form" id="categoryForm">
+        <input type="radio" name="cat" id="cat_all" value="all" class="cat-radio" checked>
+        <label for="cat_all" class="cat-btn">All</label>
 
-        <input type="radio" name="cat" id="main" value="Main Courses" class="cat-radio">
-        <label for="main" class="cat-btn">Main Dish</label>
+        <input type="radio" name="cat" id="cat_main" value="Main Courses" class="cat-radio">
+        <label for="cat_main" class="cat-btn">Main Dish</label>
 
-        <input type="radio" name="cat" id="app" value="Appetizers" class="cat-radio">
-        <label for="app" class="cat-btn">Appetizer</label>
+        <input type="radio" name="cat" id="cat_app" value="Appetizers" class="cat-radio">
+        <label for="cat_app" class="cat-btn">Appetizer</label>
 
-        <input type="radio" name="cat" id="dessert" value="Desserts" class="cat-radio">
-        <label for="dessert" class="cat-btn">Dessert</label>
+        <input type="radio" name="cat" id="cat_dessert" value="Desserts" class="cat-radio">
+        <label for="cat_dessert" class="cat-btn">Dessert</label>
     </form>
+
+    {% if user.is_staff %}
+    <a href="{% url 'add_recipe' %}" class="add-recipe-btn">+ Add Recipe</a>
+    {% endif %}
 </section>
 
-<hr>
+<hr style="border: none; border-top: 1px solid rgba(184,134,11,0.2); margin: 0 40px 20px;">
 
-<!-- RECIPES -->
 <section class="Recipes-container">
-
     {% for recipe in recipes %}
-    <div class="recipe-card show" data-category="{{ recipe.category }}"
-     onclick="window.location='{% url "recipe_detail" recipe.id %}'">
-
-        
+        <div class="recipe-card show" data-category="{{ recipe.category }}">
+        <a href="{% url 'recipe_detail' recipe.id %}" class="card-click-area"></a>
 
         <div class="img-container">
             {% if recipe.image %}
@@ -73,17 +69,12 @@
             {% else %}
                 <img src="{% static 'Images/default_recipe.jpg' %}" class="recipe-img" alt="{{ recipe.name }}">
             {% endif %}
-
-            <!-- Average rating badge -->
-            <div class="rating-badge">
-                ⭐ {{ recipe.average_rating|floatformat:1 }}
-            </div>
+            <div class="recipe-category"><p>{{ recipe.category }}</p></div>
+            <div class="rating-badge">⭐ {{ recipe.average_rating|floatformat:1 }}</div>
         </div>
 
         <div class="recipe-content">
-            <div class="recipe-name">
-                <h2>{{ recipe.name }}</h2>
-            </div>
+            <div class="recipe-name"><h2>{{ recipe.name }}</h2></div>
             <div class="recipe-metadata">
                 <span>🔥 {{ recipe.calories|default:"--" }} cal</span>
                 <span>⏱ {{ recipe.prep_time|default:"--" }}</span>
@@ -91,21 +82,13 @@
             </div>
 
             <div class="recipe-actions">
-
-                <!-- STAR RATING FORM (only shown to logged-in users) -->
-              {% if user.is_authenticated and not user.is_staff %}
+                {% if user.is_authenticated and not user.is_staff %}
                 <form method="POST" action="{% url 'rate_recipe' recipe.id %}" onclick="event.stopPropagation()">
                     {% csrf_token %}
                     <div class="star-form">
-                        <!-- 5 radio buttons, one per star. Hidden radios, styled labels. -->
                         {% for i in "54321" %}
-                        <input
-                            type="radio"
-                            name="score"
-                            id="star-{{ recipe.id }}-{{ i }}"
-                            value="{{ i }}"
-                            {% if user_ratings|get_item:recipe.id == i|add:"0" %}checked{% endif %}
-                        >
+                        <input type="radio" name="score" id="star-{{ recipe.id }}-{{ i }}" value="{{ i }}"
+                            {% if user_ratings|get_item:recipe.id == i|add:"0" %}checked{% endif %}>
                         <label for="star-{{ recipe.id }}-{{ i }}" title="{{ i }} stars">★</label>
                         {% endfor %}
                         <button type="submit" class="rate-submit-btn">Rate</button>
@@ -116,7 +99,6 @@
                 <p class="login-to-rate"><a href="{% url 'login' %}">Sign in</a> to rate</p>
                 {% endif %}
 
-                <!-- Favourite button (unchanged) -->
                 {% if user.is_authenticated %}
                 <label class="fav-label" onclick="event.stopPropagation()">
                     <input type="checkbox" class="fav-checkbox" data-id="{{ recipe.id }}"
@@ -124,100 +106,19 @@
                     <div class="fav-btn">❤</div>
                 </label>
                 {% endif %}
-
             </div>
         </div>
     </div>
     {% empty %}
     <div class="no-results">
-        <p>No recipes found for "<strong>{{ query }}</strong>". Try a different search!</p>
+        <p>No recipes found{% if query %} for "<strong>{{ query }}</strong>"{% endif %}. Try a different search or add a new recipe!</p>
     </div>
     {% endfor %}
-
 </section>
 
 <footer>
-    Copyright © 2026
+    <p>El Sofra &copy; 2026</p>
 </footer>
 
-<style>
-/* ── Star Rating Form ─────────────────────────── */
-
-/* Hide the actual radio inputs */
-.star-form input[type="radio"] {
-    display: none;
-}
-
-.star-form {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    /* Stars are written 5→1 in HTML so CSS "checked ~ label" trick works.
-       We reverse them visually with flex-direction. */
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-}
-
-/* Each star label */
-.star-form label {
-    font-size: 1.4rem;
-    color: #ccc;
-    cursor: pointer;
-    transition: color 0.15s;
-}
-
-/* When a radio is checked, colour that star and all stars after it (visually before, due to reverse) */
-.star-form input[type="radio"]:checked ~ label,
-.star-form input[type="radio"]:checked ~ label ~ label {
-    color: #b8860b;
-}
-
-/* Hover effect: colour hovered star and all stars "above" it */
-.star-form label:hover,
-.star-form label:hover ~ label {
-    color: #d4a017;
-}
-
-/* Small submit button */
-.rate-submit-btn {
-    margin-left: 6px;
-    background: #b8860b;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 3px 10px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    cursor: pointer;
-    letter-spacing: 0.05em;
-    transition: background 0.2s;
-}
-.rate-submit-btn:hover {
-    background: #9a720a;
-}
-
-.login-to-rate {
-    font-size: 0.75rem;
-    color: #907659;
-}
-.login-to-rate a {
-    color: #b8860b;
-}
-.recipe-card {
-    cursor: pointer;
-}
-
-.recipe-actions,
-.recipe-actions form,
-.recipe-actions label,
-.star-form,
-.star-btn,
-.fav-label {
-    pointer-events: auto; /* ← these stay clickable */
-    position: relative;
-    z-index: 10;
-}
-</style>
-
 <script src="{% static 'js/List.js' %}"></script>
-{% endblock content %}
+{% endblock %}
