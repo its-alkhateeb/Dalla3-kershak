@@ -276,6 +276,7 @@ body {
   gap: 16px;
   margin-bottom: 40px;
   flex-wrap: wrap;
+  padding-top: 25px;
 }
 
 .btn-back {

@@ -126,15 +126,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const card = checkbox.closest('.recipe-card');
         const recipeId = checkbox.dataset.id;
 
-        // Only animate when UNchecking (removing from favorites)
         if (!checkbox.checked) {
-            // Re-check immediately so the heart stays filled during animation
             checkbox.checked = true;
 
-            // Add the fade-out animation class
             card.classList.add('removing');
 
-            // After animation ends, send the unfavorite request and remove card
             card.addEventListener('animationend', function () {
                 fetch(`/recipes/favorite/${recipeId}/`, {
                     method: 'POST',
@@ -145,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }).then(() => {
                     card.remove();
-                    // Show "no results" if all cards are gone
                     if (container.querySelectorAll('.recipe-card').length === 0) {
                         container.innerHTML = '<div class="no-results" style="grid-column: 1 / -1;"><p>You haven\'t favorited any recipes yet! Go explore the <a href="/recipes/" style="color: #b8860b;">Recipe List</a>.</p></div>';
                     }

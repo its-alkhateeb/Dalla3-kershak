@@ -26,7 +26,17 @@ import json
 @login_required
 def favourites(request):
     my_favorites = request.user.favorite_recipes.all()
-    return render(request, 'Favourites.html', {'recipes': my_favorites})
+
+    user_ratings = {}
+    if request.user.is_authenticated:
+        my_ratings = Rating.objects.filter(user=request.user)
+        for r in my_ratings:
+            user_ratings[r.recipe_id] = r.score
+
+    return render(request, 'Favourites.html', {
+        'recipes': my_favorites,
+        'user_ratings': user_ratings,
+    })
 
 
 
